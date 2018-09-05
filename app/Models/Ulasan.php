@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Uuid;
+use App\Traits\UuidForKey;
 use Illuminate\Database\Eloquent\Model;
 
 class Ulasan extends Model
