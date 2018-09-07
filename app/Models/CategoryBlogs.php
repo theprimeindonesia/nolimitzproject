@@ -13,7 +13,8 @@ class CategoryBlogs extends Model
     protected $primaryKey = 'category_blogs_id';
     protected $fillable = [
         'category_blogs_id',
-        'name',
+        'name_ind',
+        'name_en',
     ];
 
     public function blogs()
