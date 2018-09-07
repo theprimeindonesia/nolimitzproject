@@ -13,6 +13,7 @@ class Orders extends Model
     protected $primaryKey = 'orders_id';
     protected $fillable = [
         'orders_id',
+        'no_invoice',
         'total',
         'discount',
         'grand_total',
