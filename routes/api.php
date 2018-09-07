@@ -29,7 +29,9 @@ Route::post('/createUlasanBlogs/{blogid}', 'API\UlasanBlogsController@createUlas
 Route::patch('/updateUlasanBlogs/{ulasanblogid}', 'API\UlasanBlogsController@updateUlasanBlogs');
 Route::post('/createBalasUlasanBlogs/{ulasanblogid}', 'API\UlasanBlogsController@createBalasUlasanBlogs');
 Route::patch('/updateBalasUlasanBlogs/{balasulasanblogid}', 'API\UlasanBlogsController@updateBalasUlasanBlogs');
-
+//Contact
+Route::get('/contact','API\ContactController@contact');
+Route::post('/message','API\ContactController@message');
 //Auth
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
