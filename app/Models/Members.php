@@ -22,6 +22,7 @@ class Members extends Model
         'phone',
         'photo',
         'dompet',
+        'users_id',
     ];
 
     public function ulasanblogs()
@@ -82,5 +83,9 @@ class Members extends Model
     public function memberaddresses()
     {
         return $this->hasMany('App\Models\MemberAddresses', 'members_id');
+    }
+
+    public function users(){
+        return $this->belongsTo('App\Users', 'users_id');
     }
 }
