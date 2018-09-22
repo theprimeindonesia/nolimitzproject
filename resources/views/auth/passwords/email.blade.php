@@ -60,7 +60,7 @@
         <h2>Forgot Your Password ?</h2>
         <p>Input your registered email to reset your password</p>
 
-        <form method="post" action="{{ route('password.email') }}">
+        <form method="post" action="{{ route('admin.password.email') }}">
         @csrf
           <div class="form-group">
             <input type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="inputEmail" name="email" value="{{ old('email') }}" placeholder="Your Email" required>

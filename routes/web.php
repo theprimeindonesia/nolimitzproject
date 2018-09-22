@@ -13,17 +13,32 @@
 
 Route::get('/', function () {
     return view('welcome');
+})->name('welcome');
+Route::get('/admin', function () {
+    return redirect()->route('admin.home');
 });
 
-Auth::routes();
+ // Authentication Routes...
+Route::get('admin/login', 'Admin\LoginController@showLoginForm')->name('admin.login');
+Route::post('admin/login', 'Admin\LoginController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Password Reset Routes...
+Route::get('admin/password/reset', 'Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+Route::post('admin/password/email', 'Admin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+Route::get('admin/password/reset/{token}', 'Admin\ResetPasswordController@showResetForm')->name('admin.password.reset');
+Route::post('admin/password/reset', 'Admin\ResetPasswordController@reset');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','Web\RoleController')->except([
+Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/login'],function(){
+    //logout
+    Route::post('/logout', 'Admin\LoginController@logout')->name('admin.logout');
+    //home
+    Route::get('/home', 'HomeController@index')->name('admin.home');
+    //roles
+    Route::resource('/roles','Web\RoleController')->except([
         'show'
     ]);
-    Route::resource('users','Web\UserController')->except([
+    //users
+    Route::resource('/users','Web\UserController')->except([
         'show'
     ]);
 });

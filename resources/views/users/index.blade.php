@@ -41,7 +41,7 @@
 <div class="page-content">
     <div class="panel panel-bordered">
         <div class="panel-heading">
-            <h3 class="panel-title">Users Management</h3>
+            <h3 class="panel-title">User Admin Management</h3>
         </div>
         <div class="panel-body">
             @can('user-create')
@@ -49,7 +49,7 @@
                 <div class="col-md-6">
                     <div class="mb-15">
                         <a href="{{ route('users.create') }}" class="btn btn-outline btn-primary">
-                        <i class="icon wb-plus" aria-hidden="true"></i> Add New User
+                        <i class="icon wb-plus" aria-hidden="true"></i> Add New User Admin
                         </a>
                     </div>
                 </div>
@@ -89,13 +89,13 @@
                         </td>
                         <td>
                             @can('user-edit')
-                            <a href="{{ route('users.edit',$user->users_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
+                            <a href="{{ route('users.edit',$user->admins_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
                             @endcan
                             @can('user-delete')
-                            <form id="remove-user" action="{{ route('users.destroy', $user->users_id) }}" method="POST" style="display: inline-block;">
+                            <form id="remove-user" action="{{ route('users.destroy', $user->admins_id) }}" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf
-                                <button onclick="return confirm('Are you sure you want to delete this user?');" type="submit" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row"><i class="icon wb-trash" aria-hidden="true"></i></button>
+                                <button onclick="return confirm('Are you sure you want to delete this user admin?');" type="submit" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row"><i class="icon wb-trash" aria-hidden="true"></i></button>
                             </form>
                             @endcan
                         </td>

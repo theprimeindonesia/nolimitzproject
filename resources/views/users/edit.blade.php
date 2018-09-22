@@ -39,7 +39,7 @@
 					</div>
 					@endif
 					<div class="example">
-                        {!! Form::model($user, ['class' => 'form-horizontal','method' => 'PATCH','route' => ['users.update', $user->users_id]]) !!}
+                        {!! Form::model($user, ['class' => 'form-horizontal','method' => 'PATCH','route' => ['users.update', $user->admins_id]]) !!}
                         {{method_field('PATCH')}}
                         @csrf
 							<div class="form-group row">

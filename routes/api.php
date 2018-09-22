@@ -36,6 +36,7 @@ Route::get('/posts/{url}', 'API\BlogsController@blogPost');
 //Contact
 Route::get('/contact','API\ContactController@contact');
 Route::post('/message','API\ContactController@message');
+
 //Auth
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');

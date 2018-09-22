@@ -49,6 +49,11 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
             return response()->view('errors.forbidden');
         }
+        if ($this->isHttpException($exception)) {
+            if ($exception->getStatusCode() == 404) {
+                return response()->view('errors.notfound', [], 404);
+            }
+        }
         return parent::render($request, $exception);
     }
 }

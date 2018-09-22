@@ -300,9 +300,9 @@
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
                 <div class="dropdown-divider" role="presentation"></div>
-                <a class="dropdown-item" href="{{ route('logout')}}" onclick="event.preventDefault();
+                <a class="dropdown-item" href="{{ route('admin.logout')}}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
               </div>
@@ -522,7 +522,7 @@
               <li class="site-menu-item">
                 <a href="{{ route('users.index') }}">
                   <i class="site-menu-icon wb-users" aria-hidden="true"></i>
-                  <span class="site-menu-title">Users</span>
+                  <span class="site-menu-title">User Admin</span>
                 </a>
               </li>
               @endcan

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Admin;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -22,7 +22,7 @@ class UserController extends Controller
 
 	public function index(Request $request)
 	{
-		$data = User::where('email','!=','superadmin@gmail.com')->orderBy('users_id','DESC')->paginate(5);
+		$data = Admin::where('email','!=','superadmin@gmail.com')->orderBy('admins_id','DESC')->paginate(5);
 		 return view('users.index',compact('data'))
 		   ->with('i', ($request->input('page', 1) - 1) * 5);
 	}
@@ -60,7 +60,7 @@ class UserController extends Controller
 	   $input['password'] = Hash::make($input['password']);
 
 
-	   $user = User::create($input);
+	   $user = Admin::create($input);
 	   $user->assignRole($request->input('roles'));
 
 
@@ -76,7 +76,7 @@ class UserController extends Controller
 	*/
    public function edit($id)
    {
-	   $user = User::find($id);
+	   $user = Admin::find($id);
 	   $roles = Role::pluck('name','name')->all();
 	   $userRole = $user->roles->pluck('name','name')->all();
 
@@ -96,7 +96,7 @@ class UserController extends Controller
    {
 	   $this->validate($request, [
 		   'name' => 'required',
-		   'email' => 'required|email|unique:users,email,'.$id.',users_id',
+		   'email' => 'required|email|unique:admins,email,'.$id.',admins_id',
 		   'password' => 'same:confirm-password',
 		   'roles' => 'required'
 	   ]);
@@ -110,7 +110,7 @@ class UserController extends Controller
 	   }
 
 
-	   $user = User::find($id);
+	   $user = Admin::find($id);
 	   $user->update($input);
 	   DB::table('model_has_roles')->where('model_id',$id)->delete();
 
@@ -131,7 +131,7 @@ class UserController extends Controller
 	*/
    public function destroy($id)
    {
-	   User::find($id)->delete();
+	   Admin::find($id)->delete();
 	   return redirect()->route('users.index')
 					   ->with('success','User deleted successfully');
    }

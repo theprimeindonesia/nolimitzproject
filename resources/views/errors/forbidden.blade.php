@@ -62,7 +62,7 @@
           <p>Forbidden !</p>
         </header>
         <p class="error-advise">YOU DO NOT HAVE ACCESS THIS PAGE</p>
-        <a class="btn btn-primary btn-round" href="{{ route('home') }}">GO TO HOME PAGE</a>
+        <a class="btn btn-primary btn-round" href="{{ route('admin.home') }}">GO TO HOME PAGE</a>
 
         <footer class="page-copyright">
           <p>WEBSITE BY Nolimitz</p>

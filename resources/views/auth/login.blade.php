@@ -79,7 +79,7 @@
           <h3 class="font-size-24">Sign In</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 
-          <form method="POST" action="{{ route('login') }}">
+          <form method="POST" action="{{ route('admin.login') }}">
           @csrf
 
             <div class="form-group">
@@ -106,12 +106,10 @@
                 <input type="checkbox" id="rememberMe" name="rememberMe" {{ old('remember') ? 'checked' : '' }}>
                 <label for="rememberMe">Remember me</label>
               </div>
-              <a class="float-right" href="{{ route('password.request') }}">Forgot password?</a>
+              <a class="float-right" href="{{ route('admin.password.request') }}">Forgot password?</a>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
           </form>
-
-          <p>No account? <a href="{{ route('register') }}">Sign Up</a></p>
 
           <footer class="page-copyright">
             <p>WEBSITE BY NOLIMITZ</p>
