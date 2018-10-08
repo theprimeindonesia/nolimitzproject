@@ -48,5 +48,9 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
     Route::resource('/merk','Web\MerkController')->except([
         'show'
     ]);
-    Route::get('/product','Web\ProductController@index');
+
+    //CATEGORIES
+    Route::resource('/categories','Web\CategoriesController')->except([
+        'show'
+    ]);
 });

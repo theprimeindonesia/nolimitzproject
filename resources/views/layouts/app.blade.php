@@ -337,6 +337,12 @@
                 </a>
               </li>
               <li class="site-menu-item">
+                <a href="{{ route('categories.index') }}">
+                  <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
+                  <span class="site-menu-title">Categories</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
                 <a href="/product">
                   <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
                   <span class="site-menu-title">Product</span>
