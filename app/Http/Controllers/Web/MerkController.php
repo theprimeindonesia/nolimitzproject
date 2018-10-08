@@ -123,6 +123,8 @@ class MerkController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Merk::find($id)->delete();
+	   return redirect()->route('merk.index')
+					   ->with('success','User deleted successfully');
     }
 }

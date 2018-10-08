@@ -81,7 +81,7 @@
                         <td>{{ $data->name }}</td>
                         <td>
                             <a href="{{ route('merk.edit', $data->merk_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
-                            <form id="remove-user" action="{{ route('users.destroy', $data->merk_id) }}" method="POST" style="display: inline-block;">
+                            <form id="remove-user" action="{{ route('merk.destroy', $data->merk_id) }}" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf
                                 <button onclick="return confirm('Are you sure you want to delete this user admin?');" type="submit" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row"><i class="icon wb-trash" aria-hidden="true"></i></button>
