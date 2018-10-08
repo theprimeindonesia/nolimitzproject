@@ -16,7 +16,7 @@ class Merk extends Model
         'name',
         'image',
     ];
-
+    public $incrementing = false;
     public function products()
     {
         return $this->hasMany('App\Models\Products', 'merk_id');
