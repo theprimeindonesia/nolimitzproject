@@ -58,4 +58,9 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
     Route::resource('/motor','Web\MotorController')->except([
         'show'
     ]);
+
+     //TYPE
+     Route::resource('/type','Web\TypeController')->except([
+        'show'
+    ]);
 });
