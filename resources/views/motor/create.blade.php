@@ -24,7 +24,7 @@
 <div class="page-content">
 	<div class="panel panel-bordered">
 		<div class="panel-heading">
-			<h3 class="panel-title">Edit Categories</h3>
+			<h3 class="panel-title">Create New Motor</h3>
 		</div>
 		<div class="panel-body">
 			<div class="col-md-12 col-lg-12">
@@ -40,15 +40,13 @@
 					</div>
 					@endif
 					<div class="example">
-						{!! Form::model($data, ['class' => 'form-horizontal','enctype' => 'multipart/form-data','method' => 'PATCH','route' => ['categories.update', $data->categories_id]]) !!}
-                        {{method_field('PATCH')}}
+						<form class="form-horizontal" method="POST" action="{{ route('motor.store') }}" enctype="multipart/form-data"> 
 						@csrf
 						<div class="form-group row">
 							<label class="col-md-3 form-control-label">Images: </label>
 							<div class="col-md-9">
-								<img src="{{ url('/images/categories/',$data['images'])}}" width='200px;'>
 								<div class="input-group input-group-file" data-plugin="inputGroupFile">
-									<input class="form-control" readonly="" type="text" value="{{$data['images']}}">
+									<input class="form-control" readonly="" type="text">
 										<div class="input-group-append">
 											<span class="btn btn-success btn-file">
 											<i class="icon wb-upload" aria-hidden="true"></i>
@@ -59,17 +57,10 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-md-3 form-control-label">Name Indonesia: </label>
+								<label class="col-md-3 form-control-label">Name: </label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="name_ind" placeholder="Product Categories Name in Indonesia" autocomplete="off"
-									value="{{$data['name_ind']}}"/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-3 form-control-label">Name English: </label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="name_en" placeholder="Product Categories Name in English" autocomplete="off"
-									value="{{$data['name_en']}}"/>
+									<input type="text" class="form-control" name="name" placeholder="Product Motor  Name" autocomplete="off"
+									/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -78,7 +69,7 @@
 									<button type="reset" class="btn btn-default btn-outline">Reset</button>
 								</div>
 							</div>
-						{!! Form::close() !!}
+						</form>
 					</div>
 				</div>
 			</div>

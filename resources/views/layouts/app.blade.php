@@ -331,6 +331,12 @@
             <ul class="site-menu" data-plugin="menu">
               <li class="site-menu-category">Menu</li>
               <li class="site-menu-item">
+                <a href="{{ route('motor.index') }}">
+                  <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
+                  <span class="site-menu-title">Motor</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
                 <a href="{{ route('merk.index') }}">
                   <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
                   <span class="site-menu-title">Merk</span>
