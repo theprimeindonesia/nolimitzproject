@@ -5,6 +5,12 @@
             <ul class="site-menu" data-plugin="menu">
               <li class="site-menu-category">Menu</li>
               <li class="site-menu-item">
+                <a href="{{ route('uom.index') }}">
+                  <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
+                  <span class="site-menu-title">Unit of Measure</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
                 <a href="{{ route('motor.index') }}">
                   <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
                   <span class="site-menu-title">Motor</span>
@@ -29,7 +35,7 @@
                 </a>
               </li>
               <li class="site-menu-item">
-                <a href="/product">
+                <a href="{{ route('product.index') }}">
                   <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
                   <span class="site-menu-title">Product</span>
                 </a>

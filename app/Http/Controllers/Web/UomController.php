@@ -4,14 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-Use App\Models\Product;
-Use App\Models\ProductFeature;
-Use App\Models\ProductType;
-Use App\Models\ProductMotor;
-Use App\Models\Categories;
-Use App\Models\Merk;
+Use App\Models\Uom;
 
-class ProductController extends Controller
+class UomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('product.index');
+        $data = Uom::all();
+        return view('uom.index',compact('data'));
     }
 
     /**
@@ -30,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('uom.create');
     }
 
     /**
@@ -41,7 +37,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $input = $request->all();
+        $data = Uom::create($input);
+        
+        return redirect()->route('uom.index')
+                ->with('success','uom created successfully');
     }
 
     /**
@@ -63,7 +66,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+       $data =  Uom::find($id);
+       return view('uom.edit',compact('data'));
     }
 
     /**
@@ -75,7 +79,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $input = $request->all();
+        $data = Uom::find($id);
+        $data->update($input);
+
+        return redirect()->route('uom.index')
+                ->with('success','Uom updated successfully');
     }
 
     /**
@@ -86,6 +98,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Uom::find($id)->delete();
+        return redirect()->route('uom.index')
+        ->with('success','Uom deleted successfully');
     }
 }

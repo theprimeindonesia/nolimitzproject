@@ -24,11 +24,16 @@ class Stock extends Model
         'primary',
         'secondary',
         'products_id',
+        'uom_id',
     ];
 
     public function products()
     {
         return $this->belongsTo('App\Models\Products', 'products_id');
+    }
+    public function uom()
+    {
+        return $this->belongsTo('App\Models\Uom', 'uom_id');
     }
 
     public function orderdetails()
