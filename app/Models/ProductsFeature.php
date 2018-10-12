@@ -13,7 +13,6 @@ class ProductsFeature extends Model
     protected $primaryKey = 'products_feature_id';
     protected $fillable = [
         'products_feature_id',
-        'name',
         'value',
         'products_id',
     ];

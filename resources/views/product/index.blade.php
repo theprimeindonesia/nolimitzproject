@@ -58,38 +58,73 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                        <th>No</th>
                         <th>Images</th>
                         <th>Name</th>
                         <th>SKU</th>
                         <th>Barcode</th>
                         <th>Varian</th>
                         <th>Stock</th>
-                        <th>Stock</th>
+                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                    <th>No</th>
                         <th>Images</th>
                         <th>Name</th>
                         <th>SKU</th>
                         <th>Barcode</th>
                         <th>Varian</th>
                         <th>Stock</th>
-                        <th>Stock</th>
+                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
                 <tbody>
                 @php($i = 1)
+                @foreach($data as $x)
                     <tr>
-                        <td></td>
-                        <td><img src="" width='100px'></td>
-                        <td></td>
                         <td>
-                            <a href="" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
+                            @if(empty($x['stock']['images']))
+                            <img src="{{url('public/images/icon/no-image.png')}}" width='50px'>
+                            @else
+                            <img src="url('public/images/icon/no-image.png')" width='50px'>
+                            @endif
+                        </td>
+                        <td>{{$x['name']}}  <b><p>{{$x['categories']['name_ind']}}</p></b></td>
+                        <td>
+                            @foreach($x['stock'] as $a)
+                             {{$a['sku']}}<br>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($x['stock'] as $b)
+                             {{$b['barcode']}}<br>
+                            @endforeach
+                        </td>
+                        <td> 
+                            @php($id = '')
+                            @foreach($x['stock'] as $d)
+                                @foreach($d['varians'] as $v)
+                                        {{$v['value']}}
+                                @endforeach
+                                <br/>
+                            @endforeach
+                        </td>
+                        <td> 
+                            @foreach($x['stock'] as $c)
+                             {{$c['stock']}}<br/>
+                            @endforeach
+                        </td>
+                        <td> 
+                            @php($id = '')
+                            @foreach($x['stock'] as $d)
+                                {{number_format($d['price'],0,",",".")}}
+                                <br/>
+                            @endforeach
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
                             <form id="remove-user" action="" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf
@@ -97,6 +132,7 @@
                             </form>
                         </td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

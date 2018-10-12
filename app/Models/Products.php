@@ -16,7 +16,7 @@ class Products extends Model
         'name',
         'description_ind',
         'description_en',
-        'stock',
+        'stocks',
         'merk_id',
         'categories_id',
     ];

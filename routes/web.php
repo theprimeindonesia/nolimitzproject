@@ -70,7 +70,9 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
     ]);
 
      //PRODUCT
-     Route::resource('/product','Web\ProductController')->except([
-        'show'
-    ]);
+     Route::group(['prefix' => '/product'],function(){
+        Route::get('/', 'Web\ProductController@index')->name('product.index');
+        Route::get('/create', 'Web\ProductController@create')->name('product.create');
+        Route::post('/store', 'Web\ProductController@store')->name('product.store');
+     });
 });
