@@ -64,8 +64,13 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         'show'
     ]);
 
-      //UOM
+    //UOM
       Route::resource('/uom','Web\UomController')->except([
+        'show'
+    ]);
+    
+    //SUPPLIERS
+       Route::resource('/suppliers','Web\SuppliersController')->except([
         'show'
     ]);
 
