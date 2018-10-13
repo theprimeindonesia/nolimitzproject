@@ -124,7 +124,7 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
+                            <a href="{{route('product.detail',$x->products_id)}}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
                             <form id="remove-user" action="" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf

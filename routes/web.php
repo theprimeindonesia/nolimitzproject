@@ -74,5 +74,13 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::get('/', 'Web\ProductController@index')->name('product.index');
         Route::get('/create', 'Web\ProductController@create')->name('product.create');
         Route::post('/store', 'Web\ProductController@store')->name('product.store');
+        Route::get('/detail/{id}', 'Web\ProductController@detail')->name('product.detail');
+        Route::get('/edit/{id}', 'Web\ProductController@edit')->name('product.edit');
+        Route::post('/update/{id}', 'Web\ProductController@update')->name('product.update');
+        Route::get('/varian/edit/{id}', 'Web\ProductController@varianedit')->name('product.varian.edit');
+        Route::post('/varian/update/{id}', 'Web\ProductController@varianupdate')->name('product.varian.update');
+        Route::post('/varian/delete/{id}', 'Web\ProductController@variandelete')->name('product.varian.delete');
+        Route::get('/varian/add/{id}', 'Web\ProductController@varianadd')->name('product.varian.add');
+        Route::post('/varian/save/{id}', 'Web\ProductController@variansave')->name('product.varian.save');
      });
 });

@@ -29,6 +29,18 @@
         pointer-events: none;
         opacity: 0.4;
     }
+    .example {
+        margin-top:0px !important;
+    }
+    h6 {
+        margin-bottom:5px !important;
+    }
+    .card-block {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 0.5rem;
+    }
 </style>
 @endsection
 @section('custom_page')
@@ -57,124 +69,114 @@
 <script src="{{asset('admin/assets/examples/js/forms/advanced.js')}}"></script>
 @endsection
 @section('content')
+<div class="page-header">
+    <h1 class="page-title">Product Detail</h1>
+    <a href="{{route('product.index')}}" class="btn btn-success"> <i class="icon wb-arrow-left" aria-hidden="true"></i> Back</a>
+</div>
 <div class="page-content container-fluid">
-    <form action="{{route('product.update', $data->products_id)}}" method="post" id="formVarian" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" id="arrayVarian" name="array_varian">
-        <div class="panel panel-bordered">
-            <div class="panel-heading">
-                <h3 class="panel-title">Edit Product</h3>
-            </div>
-            @if (count($errors) > 0)
-					<div class="alert alert-danger">
-						<strong>Whoops!</strong> There were some problems with your input.<br><br>
-						<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-						</ul>
-					</div>
-					@endif
-            <div class="panel-body container-fluid">
-                <div class="row row-lg">
-                    <div class="col-md-6">
-                        <h4 class="example-title">Name</h4>
-                        <div class="example">
-                            <input type="text" name="name" class="form-control" value="{{$data['name']}}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="example-title">Product Category</h4>
-                        <div class="example">
-                            <select class="form-control" name="categories_id">
-                                @foreach($category as $c)
-                                <option value="{{$c['categories_id']}}" selected="{{$data['categories_id'] === $c['categories_id'] ? 'selected':''  }}">{{$c['name_ind']}} - {{$c['name_en']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4">
-                        <h4 class="example-title">Brand / Merk</h4>
-                        <div class="example">
-                            <select class="form-control" name="merk_id">
-                                @foreach($merk as $a)
-                                <option value="{{$a['merk_id']}}" selected="{{$data['merk_id'] === $a['merk_id'] ? 'selected':''  }}">{{$a['name']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4">
-                        <h4 class="example-title">Motor Brand</h4>
-                        <div class="example">
-                            <select class="form-control" multiple data-plugin="select2" name="motor_id[]">
-                                <optgroup label="Selected Motor Brand">
-                                    @foreach($data['productsmotor'] as $pm)
-                                    <option value="{{$pm['motor_id']}}" selected="selected">{{$pm['motor']['name']}}</option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="Other Motor Brand">
-                                    @foreach($motor as $b)
-                                    <option value="{{$b['motor_id']}}">{{$b['name']}}</option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-4">
-                        <h4 class="example-title">Motor Type</h4>
-                        <div class="example">
-                            <select class="form-control" multiple data-plugin="select2" name="type_id[]">
-                            <optgroup label="Selected Motor Type">
-                                    @foreach($data['productstype'] as $tm)
-                                    <option value="{{$tm['type_id']}}" selected="selected">{{$tm['type']['name']}}</option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="Other Motor Type">
-                                    @foreach($type as $e)
-                                    <option value="{{$e['type_id']}}">{{$e['name']}}</option>
-                                    @endforeach
-                                </optgroup>
-                               
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="example-title"> Description in Indonesia </h4>
-                        <div class="example">
-                            <textarea name="description_ind" id="" cols="30" rows="10" class="form-control">{{$data['description_ind']}}</textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4 class="example-title"> Description in English </h4>
-                        <div class="example">
-                            <textarea name="description_en" id="" cols="30" rows="10" class="form-control">{{$data['description_en']}}</textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <h4 class="example-title"> Product Feature </h4>
-                        <p>Product feature, example : Tahan pecah, Terbuat dari 100% plastik. (Bukan Fiber). <code>use "Enter" to each product feature</code></p>
-                        <div class="example">
-                            <input type="text" name="feature" class="form-control" data-plugin="tokenfield" value="
-                            @foreach($data['productsfeature'] as $pf)
-                                {{$pf['value']}},
-                            @endforeach
-                            "/>
+    <div id="varians" class="row">
+        <div class="col-md-6">
+            <div class="panel panel-bordered ">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Product Profile</h4>
+                    <div class="panel-actions">
+                        <div class="dropdown">
+                            <a class="panel-action" data-toggle="dropdown" href="#" aria-expanded="false"><i class="icon wb-settings" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu dropdown-menu-bullet" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px;">
+                            <a class="dropdown-item" href="{{route('product.edit',$data->products_id)}}" role="menuitem"><i class="icon wb-pencil" aria-hidden="true"></i> Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i> Product Link</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-body container-fluid">
-                <div class="row row-lg">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary" >Save</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
+                <div class="panel-body container-fluid">
+                    <div class="row row-lg">
+                        <div class="col-md-12">
+                            <h6 class="example-title">Product Name</h6>
+                            <div class="example">
+                                <h4>{{$data['name']}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="example-title">Categories</h6>
+                            <div class="example">
+                                <h4>{{$data['categories']['name_ind']}} - {{$data['categories']['name_en']}} </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="example-title">Brand/Merk</h6>
+                            <div class="example">
+                                <h4>{{$data['merk']['name']}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="example-title">Motor Brand</h6>
+                            <div class="example">
+                                <h4>
+                                    @foreach($data['productsmotor'] as $m)
+                                        {{$m['motor']['name']}},
+                                    @endforeach
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="example-title">Motor Type</h6>
+                            <div class="example">
+                                <h4>
+                                @foreach($data['productstype'] as $t)
+                                    {{$t['type']['name']}},
+                                @endforeach
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="example-title">Product Feature</h6>
+                            <div class="example">
+                                <h4>
+                                @foreach($data['productsfeature'] as $f)
+                                    {{$f['value']}}<br/>
+                                @endforeach
+                                </h4>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
-    </form>
+        <div class="col-md-6">
+            <div class="panel panel-bordered ">
+                <div class="panel-heading">
+                    <div class="panel-actions">
+                        <div class="dropdown">
+                            <a class="panel-action" data-toggle="dropdown" href="#" aria-expanded="false"><i class="icon wb-settings" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu dropdown-menu-bullet" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px;">
+                            <a class="dropdown-item" href="{{route('product.varian.add', $data['products_id'])}}" role="menuitem"><i class="icon wb-plus" aria-hidden="true"></i> Add Varian</a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="panel-title">Product Varian List</h4>
+                </div>
+                
+                <div class="panel-body container-fluid" id="variansList">
+                    @foreach($data['stock'] as $x)
+                    <a href="{{route('product.varian.edit',$x->stock_id)}}" style="text-decoration:none">
+                        <div class='card border border-primary'>
+                            <div class='card-block'>
+                                <h4 class='card-title'>
+                                    @foreach($x['varians'] as $v)
+                                        {{$v['value']}}
+                                    @endforeach
+                                <span style='float:right;'><button class='btn btn-primary btn-sm ' ><i class='icon wb-pencil' aria-hidden='true'></i></button></span></h4>
+                                <p class='card-text'>Rp. {{number_format($x['price'],0,",",".")}} | Stock {{$x['stock']}} </p>
+                            </div>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('custom_scripts')
@@ -206,7 +208,4 @@
 <script src="{{asset('global/vendor/typeahead-js/bloodhound.min.js')}}"></script>
 <script src="{{asset('global/vendor/typeahead-js/typeahead.jquery.min.js')}}"></script>
 <script src="{{asset('global/vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
-<script>
-
-</script>
 @endsection
