@@ -102,4 +102,9 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::get('/varian/add/{id}', 'Web\ProductController@varianadd')->name('product.varian.add');
         Route::post('/varian/save/{id}', 'Web\ProductController@variansave')->name('product.varian.save');
      });
+
+     //EXPEDITIONS
+     Route::resource('/expeditions','Web\ExpeditionsController')->except([
+        'show'
+    ]);
 });
