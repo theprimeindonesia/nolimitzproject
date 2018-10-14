@@ -74,6 +74,20 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         'show'
     ]);
 
+    //PURCHASE
+    Route::group(['prefix' => '/purchase'],function(){
+        Route::get('/', 'Web\PurchaseController@index')->name('purchase.index');
+        Route::get('/create', 'Web\PurchaseController@create')->name('purchase.create');
+        Route::post('/store', 'Web\PurchaseController@store')->name('purchase.store');
+        Route::get('/detail/{id}', 'Web\PurchaseController@detail')->name('purchase.detail');
+        Route::post('/destroy/{id}', 'Web\PurchaseController@destroy')->name('purchase.destroy');
+        Route::get('/received/{id}', 'Web\PurchaseController@received')->name('purchase.received');
+        Route::post('/update/{id}', 'Web\PurchaseController@update')->name('purchase.update');
+        Route::post('/podet/{id}', 'Web\PurchaseController@podet')->name('purchase.podet');
+        Route::get('/return/{id}', 'Web\PurchaseController@return')->name('purchase.return');
+        Route::post('/return/update/{id}', 'Web\PurchaseController@returnupdate')->name('purchase.return.update');
+    });
+
      //PRODUCT
      Route::group(['prefix' => '/product'],function(){
         Route::get('/', 'Web\ProductController@index')->name('product.index');

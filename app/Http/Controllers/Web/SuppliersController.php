@@ -47,7 +47,7 @@ class SuppliersController extends Controller
         $addresses  = Addresses::create($input);
 
         $suppliers = new Suppliers;
-        $suppliers->name = $input['city'];
+        $suppliers->name = $input['name'];
         $suppliers->contact = $input['contact'];
         $suppliers->contact_sales = $input['contact_sales'];
         $addresses->suppliers()->save($suppliers);

@@ -13,6 +13,7 @@ class Po extends Model
     protected $primaryKey = 'po_id';
     protected $fillable = [
         'po_id',
+        'no_po',
         'total',
         'discount',
         'grand_total',

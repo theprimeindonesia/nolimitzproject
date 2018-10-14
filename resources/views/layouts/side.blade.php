@@ -46,6 +46,12 @@
                   <span class="site-menu-title">Suplliers</span>
                 </a>
               </li>
+              <li class="site-menu-item">
+                <a href="{{ route('purchase.index') }}">
+                  <i class="site-menu-icon ion-ios-pricetags" aria-hidden="true"></i>
+                  <span class="site-menu-title">Purchase</span>
+                </a>
+              </li>
               @can('user-list')
               <li class="site-menu-item">
                 <a href="{{ route('users.index') }}">
