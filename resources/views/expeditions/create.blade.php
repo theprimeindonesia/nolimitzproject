@@ -24,7 +24,7 @@
 <div class="page-content">
 	<div class="panel panel-bordered">
 		<div class="panel-heading">
-			<h3 class="panel-title">Create New Merk</h3>
+			<h3 class="panel-title">Create New Expedition</h3>
 		</div>
 		<div class="panel-body">
 			<div class="col-md-12 col-lg-12">

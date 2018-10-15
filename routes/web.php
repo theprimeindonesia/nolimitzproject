@@ -107,4 +107,9 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
      Route::resource('/expeditions','Web\ExpeditionsController')->except([
         'show'
     ]);
+
+     //PAYMENTS
+     Route::resource('/payments','Web\PaymentsController')->except([
+        'show'
+    ]);
 });
