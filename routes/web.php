@@ -112,4 +112,35 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
      Route::resource('/payments','Web\PaymentsController')->except([
         'show'
     ]);
+
+      //MEMBERS
+      Route::group(['prefix' => '/members'],function(){
+        Route::get('/', 'Web\MembersController@index')->name('members.index');
+        Route::get('/create', 'Web\MembersController@create')->name('members.create');
+        Route::post('/store', 'Web\MembersController@store')->name('members.store');
+        Route::get('/detail/{id}', 'Web\MembersController@detail')->name('members.detail');
+        Route::get('/edit/{id}', 'Web\MembersController@edit')->name('members.edit');
+        Route::post('/update/{id}', 'Web\MembersController@update')->name('members.update');
+        Route::post('/destroy/{id}', 'Web\MembersController@destroy')->name('members.destroy');
+
+        Route::get('/address/{id}', 'Web\MembersController@address')->name('members.address');
+        Route::get('/address/edit/{id}', 'Web\MembersController@addressedit')->name('members.address.edit');
+        Route::post('/address/add/{id}', 'Web\MembersController@addressadd')->name('members.address.add');
+        Route::post('/address/update/{id}', 'Web\MembersController@addressupdate')->name('members.address.update');
+        Route::post('/address/destroy/{id}', 'Web\MembersController@addressdestroy')->name('members.address.destroy');
+
+        Route::get('/bank/{id}', 'Web\MembersController@bank')->name('members.bank');
+        Route::get('/bank/edit/{id}', 'Web\MembersController@bankedit')->name('members.bank.edit');
+        Route::post('/bank/add/{id}', 'Web\MembersController@bankadd')->name('members.bank.add');
+        Route::post('/bank/update/{id}', 'Web\MembersController@bankupdate')->name('members.bank.update');
+        Route::post('/bank/destroy/{id}', 'Web\MembersController@bankdestroy')->name('members.bank.destroy');
+
+         
+
+      });
+
+       //ORDERS
+       Route::group(['prefix' => '/orders'],function(){
+           
+       });
 });

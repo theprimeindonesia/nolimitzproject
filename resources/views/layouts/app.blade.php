@@ -30,6 +30,7 @@
     <!-- Fonts -->
     @yield('custom_fonts')
     <link rel="stylesheet" href="{{ asset('global/fonts/ionicons/ionicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('global/fonts/font-awesome/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('global/fonts/web-icons/web-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('global/fonts/brand-icons/brand-icons.min.css') }}">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
@@ -49,7 +50,7 @@
       Breakpoints();
     </script>
   </head>
-  <body class="animsition dashboard">
+  <body class="animsition @yield('custom_body')">
     <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->

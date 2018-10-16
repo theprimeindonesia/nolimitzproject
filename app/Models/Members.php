@@ -72,12 +72,12 @@ class Members extends Model
 
     public function referralsa()
     {
-        return $this->hasMany('App\Models\Referrals', 'members_id');
+        return $this->hasMany('App\Models\Referrals', 'members_a_id','members_id');
     }
 
     public function referralsb()
     {
-        return $this->hasMany('App\Models\Referrals', 'members_id');
+        return $this->hasOne('App\Models\Referrals', 'members_b_id','members_id');
     }
 
     public function memberaddresses()

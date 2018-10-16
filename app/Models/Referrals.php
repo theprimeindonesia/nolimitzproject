@@ -19,11 +19,11 @@ class Referrals extends Model
 
     public function membersa()
     {
-        return $this->belongsTo('App\Models\Members', 'members_a_id');
+        return $this->hasOne('App\Models\Members','members_a_id','members_id');
     }
 
     public function membersb()
     {
-        return $this->belongsTo('App\Models\Members', 'members_b_id');
+        return $this->belongsTo('App\Models\Members', 'members_b_id','members_id');
     }
 }
