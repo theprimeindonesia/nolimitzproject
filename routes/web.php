@@ -141,6 +141,10 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
 
        //ORDERS
        Route::group(['prefix' => '/orders'],function(){
-           
+           Route::get('/', 'Web\OrdersController@index')->name('orders.index');
+           Route::get('/detail/{id}', 'Web\OrdersController@detail')->name('orders.detail');
+           Route::post('/destroy/{id}', 'Web\OrdersController@destroy')->name('orders.destroy');
+           Route::get('/paid/{id}', 'Web\OrdersController@paid')->name('orders.paid');
+
        });
 });
