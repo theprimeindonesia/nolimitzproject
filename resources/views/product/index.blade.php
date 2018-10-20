@@ -105,10 +105,10 @@
                         <td> 
                             @php($id = '')
                             @foreach($x['stock'] as $d)
-                                @foreach($d['varians'] as $v)
-                                        {{$v['value']}}
-                                @endforeach
-                                <br/>
+                                    @foreach($d['varians'] as $v)
+                                            {{$v['value']}}
+                                    @endforeach
+                                    <br/>
                             @endforeach
                         </td>
                         <td> 

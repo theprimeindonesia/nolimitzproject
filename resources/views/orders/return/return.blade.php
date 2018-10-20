@@ -29,18 +29,6 @@
     pointer-events: none;
     opacity: 0.4;
     }
-    .example {
-    margin-top:0px !important;
-    }
-    h6 {
-    margin-bottom:5px !important;
-    }
-    .card-block {
-    position: relative;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 0.5rem;
-    }
 </style>
 @endsection
 @section('custom_page')
@@ -69,133 +57,87 @@
 <script src="{{asset('admin/assets/examples/js/forms/advanced.js')}}"></script>
 @endsection
 @section('content')
-<div class="page-header">
-    <h1 class="page-title">Purchase Order</h1>
-</div>
-<div class="page-content">
-    <!-- Panel -->
-    <div class="panel">
-        <div class="panel-body container-fluid">
-            <div class="row">
-                <div class="col-lg-3">
-                    <h3>
-                        {{$data['suppliers']['name']}}
-                    </h3>
-                    <address>
-                    {{$data['suppliers']['addresses']['subdistrict']}}
-                        <br> {{$data['suppliers']['addresses']['city']}}, {{$data['suppliers']['addresses']['province']}}, {{$data['suppliers']['addresses']['zip']}}
-                        <br>
-                        <abbr title="Phone">P:</abbr>&nbsp;&nbsp;{{$data['suppliers']['contact']}} - {{$data['suppliers']['contact_sales']}}
-                        <br>
-                    </address>
+<div class="page-content container-fluid">
+    <form action="{{route('purchase.return.update',$data['po_id'])}}" method="post" id="formVarian" enctype="multipart/form-data">
+        @csrf
+        <div class="panel panel-bordered">
+            <div class="panel-heading">
+                <h3 class="panel-title">Return Purchase Order</h3>
+            </div>
+            <div class="panel-body container-fluid">
+                <div class="row row-lg">
+                    <div class="col-md-6">
+                        <h4 class="example-title">NO PO</h4>
+                        <div class="example">
+                            <input type="text" name="no_po" class="form-control" value="{{$data['no_po']}}" readonly>
+                            <input type="hidden" name="po_id" class="form-control" value="{{$data['po_id']}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="example-title">Supplier</h4>
+                        <div class="example">
+                            <select class="form-control" name="suppliers_id" readonly>
+                                @foreach($suppliers as $s)
+                                <option value="{{$s['suppliers_id']}}">{{$s['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3 offset-lg-6 text-right">
-                    <h4>Purchase Order Info</h4>
-                    <p>
-                        <a class="font-size-20" href="javascript:void(0)">{{$data['no_po']}} </a>
-                        - 
-                        @if($data['status'] === 'PO')
-                          <span class="badge badge-lg badge-warning">PO</span>
-                        @else
-                          <span class="badge badge-lg badge-success">RECEIVED</span>
-                        @endif
-                    </p>
-                    <span>Purchase Date: {{$data['created_at']}}</span>
-                </div>
-            </div>
-            <div class="page-invoice-table table-responsive">
-                <table class="table table-hover text-right">
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-left">Product</th>
-                            <th class="text-right">Price</th>
-                            <th class="text-right">Quantity</th>
-                            <th class="text-right">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @php($no = 1)
-                        @foreach($data['podetails'] as $x)
-                        <tr>
-                            <td class="text-center">{{$no++}}</td>
-                            <td class="text-left">
-                              {{$x['stock']['products']['name']}} - 
-                              @foreach($x['stock']['varians'] as $v)
-                                {{$v['value']}}
-                              @endforeach 
-                            </td>
-                            <td>Rp. {{number_format($x['price'],0,',','.')}}</td>
-                            <td class="text-left">{{$x['qty']}} {{$x['stock']['uom']['name']}} </td>
-                            <td>Rp. {{number_format($x['total'],0,',','.')}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-           
-            <div class="text-right clearfix">
-                <div class="float-right">
-                    <p>Sub - Total amount:
-                        <span>Rp. {{number_format($data['total'],0,',','.')}}</span>
-                    </p>
-                    <p>Discount:
-                        <span>Rp. {{number_format($data['discount'],0,',','.')}}</span>
-                    </p>
-                    <p class="page-invoice-amount">Grand Total:
-                        <span>Rp. Rp. {{number_format($data['grand_total'],0,',','.')}}</span>
-                    </p>
-                </div>
-            </div>
-            <div class="text-right">
-                   @if($data['status'] === 'PO')
-                    <a href="{{route('purchase.received',$data['po_id'])}}" class="btn btn-animate btn-animate-side btn-primary">
-                      <span><i class="icon wb-shopping-cart" aria-hidden="true"></i> PROCESS TO RECEIVED</span>
-                    </a>
-                  @else
-                    <a href="{{route('purchase.return',$data['po_id'])}}" class="btn btn-animate btn-animate-side btn-danger">
-                      <span><i class="icon wb-shopping-cart" aria-hidden="true"></i> RETURN PURCHASED ORDER</span>
-                    </a>
-                  @endif
-               
-                <a href="{{route('purchase.po',$data['po_id'])}}" type="button" class="btn btn-animate btn-animate-side btn-warning btn-outline" >
-                <span><i class="icon wb-print" aria-hidden="true"></i> Print</span>
-                </a>
-            </div>
-            <hr/>
-            <h3>
-                Return Purchase Order
-            </h3>
-            <div class="page-invoice-table table-responsive">
-                <table class="table table-hover text-right">
-                    <thead>
-                        <tr>
-                            <th class="text-left">Date</th>
-                            <th class="text-left">Products</th>
-                            <th class="text-right">Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($data['returpo'] as $a)
-                              @foreach($a['returpodetails'] as $b)
-                              <tr>
-                                <td class="text-left" >{{$b['created_at']}}</td>
-                                <td class="text-left">
-                                  {{$b['stock']['products']['name']}} - 
-                                  @foreach($x['stock']['varians'] as $c)
-                                    {{$c['value']}}
-                                  @endforeach 
-                                </td>
-                                <td>{{$b['qty']}}</td>
-                                </tr>
-                            @endforeach
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
-    </div>
-    <!-- End Panel -->
+        <div id="varians" class="row">
+            <div class="col-md-12">
+                <div class="panel panel-bordered ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Product List</h3>
+                    </div>
+                    <div class="panel-body container-fluid" id="variansList">
+                        <div class="page-invoice-table table-responsive">
+                            <table class="table table-hover text-right">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-left">Product</th>
+                                        <th class="text-right">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php($no = 1)
+                                    @foreach($data['podetails'] as $x)
+                                    @if($x['qty'] > 0)
+                                    <tr>
+                                        <td class="text-center">{{$no++}}</td>
+                                        <td class="text-left">
+                                            {{$x['stock']['products']['name']}} - 
+                                            @foreach($x['stock']['varians'] as $v)
+                                            {{$v['value']}}
+                                            @endforeach 
+                                        </td>
+                                        
+                                        <td class="text-left"><input type="text" class="form-control dyn" name="data[qty][]" value="{{$x['qty']}}"></td>
+                                    </tr>
+                                    <input type="hidden" class="form-control dyn" name="data[stock_id][]" value="{{$x['stock_id']}}">
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body container-fluid">
+                <div class="row row-lg">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success" id="saveReceived">Send Return</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 @endsection
 @section('custom_scripts')

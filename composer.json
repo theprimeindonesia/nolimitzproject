@@ -13,7 +13,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6",
         "ramsey/uuid": "^3.8",
-        "spatie/laravel-permission": "^2.19"
+        "spatie/laravel-permission": "^2.19",
+        "steevenz/rajaongkir": "^2.2"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

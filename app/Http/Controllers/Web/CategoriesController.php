@@ -54,7 +54,7 @@ class CategoriesController extends Controller
             $file       = $request->file('images');
             $ext        = $file->getClientOriginalExtension();
             $fileName   = "cat-".$image_uuid.".$ext";
-            $upload_path ='images/categories';
+            $upload_path ='public/images/categories';
             $request->file('images')->move($upload_path, $fileName);
             $data->images = $fileName;      
           }
@@ -112,7 +112,7 @@ class CategoriesController extends Controller
             $file       = $request->file('images');
             $ext        = $file->getClientOriginalExtension();
             $fileName   = "cat-".$image_uuid.".$ext";
-            $upload_path ='images/categories';
+            $upload_path ='public/images/categories';
             $request->file('images')->move($upload_path, $fileName);
             $data->images = $fileName;      
           }
@@ -130,7 +130,7 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $data = Categories::find($id);
-        $image_path = "images/categories/".$data['images'];
+        $image_path = "public/images/categories/".$data['images'];
         $delete = File::delete($image_path);
         if($delete){
             $data->delete();

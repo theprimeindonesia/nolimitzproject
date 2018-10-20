@@ -52,7 +52,13 @@ class PurchaseController extends Controller
             'suppliers_id' => 'required',
         ]);
         $input = $request->all();
-        $purchase = Po::create($input);
+        $purchase = new Po;
+        $purchase->no_po = $input['no_po'];
+        $purchase->total = $input['total'];
+        $purchase->grand_total = $input['total'];
+        $purchase->status = "PO";
+        $purchase->suppliers_id = $input['suppliers_id'];
+        $purchase->save();
 
         $array = $request['array_stock'];
         $data = json_decode($array,true);
@@ -228,6 +234,12 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
+    public function po($id)
+    {
+        $data = Po::with('podetails','podetails.stock.products','suppliers.addresses','podetails.stock.varians','returpo.returpodetails.stock.products','returpo.returpodetails.stock.varians')->find($id);
+        return view('purchase.po',compact('data'));
+    }
     public function destroy($id)
     {
         //

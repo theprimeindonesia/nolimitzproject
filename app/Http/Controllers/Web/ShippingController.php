@@ -4,14 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Stock;
-use App\Models\StockLog;
-use App\Models\ReturOrders;
 use App\Models\Orders;
-use App\Models\OrderDetails;
-use App\Models\OrderDelivery;
+use App\Models\Expeditions;
 
-class OrdersController extends Controller
+class ShippingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,45 +17,36 @@ class OrdersController extends Controller
     public function index()
     {
         $data = Orders::with('members')->orderBy('created_at')->get();
-        $retur = ReturOrders::all();
-        return view('orders.index',compact('data','retur'));
-    }   
+        $expeditions = Expeditions::all();
+        return view('shipping.index',compact('data','expeditions'));
+    }
+
+    public function label($id)
+    {
+        $data = Orders::with('members','memberaddresses.addresses')->find($id);
+        $data->status ="DELIVERING";
+        $data->update();
+        return view('shipping.label',compact('data'));
+    }
+
+    public function resi(Request $request)
+    {
+        $id = $request['orders_id'];
+        $data = Orders::find($id);
+        $data->resi = $request['resi'];
+        $data->expeditions_id = $request['expeditions_id'];
+        $data->update();
+        return back();
+    }
 
     public function detail($id)
     {
         $data = Orders::with('members','orderdetails.stock.products','orderdetails.stock.varians','memberaddresses.addresses','payments','expeditions')->orderBy('created_at')->find($id);
         //return $data;
-        return view('orders.detail',compact('data'));
-    }   
-    public function paid($id)
-    {
-        $order = Orders::with('orderdetails')->find($id);
-        $order->status = "PAID";
-        $order->update();
-
-        foreach($order['orderdetails'] as $x){
-            $stock_id = $x['stock_id'];
-            $stock = Stock::find($stock_id);
-            $qty = $stock->stock;
-            $sum = $qty - $x['qty'];
-            $stock->stock = $sum;
-            $stock->update();
-
-            $stock_log = new StockLog;
-            $stock_log->qty = $x['qty']*-1;
-            $stock_log->stock_id = $x['stock_id'];
-            $stock_log->orders_id = $x['orders_id'];
-            $stock_log->save();
-        }
-        
-        return back();
+        return view('shipping.detail',compact('data'));
     }
 
-    public function return()
-    {
-        $data = ReturOrders::with('orders.members')->get();
-        return view('orders.retur.index',compact('data'));
-    }
+
     /**
      * Show the form for creating a new resource.
      *

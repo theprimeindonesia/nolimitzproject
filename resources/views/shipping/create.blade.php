@@ -29,18 +29,6 @@
         pointer-events: none;
         opacity: 0.4;
     }
-    .example {
-        margin-top:0px !important;
-    }
-    h6 {
-        margin-bottom:5px !important;
-    }
-    .card-block {
-        position: relative;
-        -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-        padding: 0.5rem;
-    }
 </style>
 @endsection
 @section('custom_page')
@@ -69,151 +57,115 @@
 <script src="{{asset('admin/assets/examples/js/forms/advanced.js')}}"></script>
 @endsection
 @section('content')
-<div class="page-header">
-    <h1 class="page-title">Product Detail</h1>
-    <a href="{{route('product.index')}}" class="btn btn-success"> <i class="icon wb-arrow-left" aria-hidden="true"></i> Back</a>
-</div>
 <div class="page-content container-fluid">
+    <form action="{{route('purchase.store')}}" method="post" id="formVarian" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" id="arrayStock" name="array_stock">
+        <div class="panel panel-bordered">
+            <div class="panel-heading">
+                <h3 class="panel-title">Create New Purchase Order</h3>
+            </div>
+            <div class="panel-body container-fluid">
+                <div class="row row-lg">
+                    <div class="col-md-6">
+                        <h4 class="example-title">NO PO</h4>
+                        <div class="example">
+                            <input type="text" name="no_po" class="form-control" id="noPo" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="example-title">Supplier</h4>
+                        <div class="example">
+                            <select class="form-control" name="suppliers_id">
+                                @foreach($suppliers as $s)
+                                    <option value="{{$s['suppliers_id']}}">{{$s['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="total" value="0" name="total">
+        <input type="hidden" id="grandTotal" value="0" name="grand_total">
+        <input type="hidden"  value="PO" name="status">
+    </form>
     <div id="varians" class="row">
         <div class="col-md-6">
             <div class="panel panel-bordered ">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Product Profile</h4>
-                    <div class="panel-actions">
-                        <div class="dropdown">
-                            <a class="panel-action" data-toggle="dropdown" href="#" aria-expanded="false"><i class="icon wb-settings" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu dropdown-menu-bullet" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px;">
-                            <a class="dropdown-item" href="{{route('product.edit',$data->products_id)}}" role="menuitem"><i class="icon wb-pencil" aria-hidden="true"></i> Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i> Product Link</a>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="panel-title">Product</h3>
                 </div>
                 <div class="panel-body container-fluid">
                     <div class="row row-lg">
-                        <div class="col-md-12">
-                            <h6 class="example-title">Product Name</h6>
-                            <div class="example">
-                                <h4>{{$data['name']}}</h4>
-                            </div>
+                        <div id="varianFeature" class="col-md-12 row varianFeature">
                         </div>
                         <div class="col-md-12">
-                            <h6 class="example-title">Categories</h6>
+                            <h4 class="example-title">Product</h4>
                             <div class="example">
-                                <h4>{{$data['categories']['name_ind']}} - {{$data['categories']['name_en']}} </h4>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <h6 class="example-title">Brand/Merk</h6>
-                            <div class="example">
-                                <h4>{{$data['merk']['name']}}</h4>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <h6 class="example-title">Motor Brand</h6>
-                            <div class="example">
-                                <h4>
-                                    @foreach($data['productsmotor'] as $m)
-                                        {{$m['motor']['name']}},
+                                <select class="form-control" data-plugin="select2" data-minimum-input-length="2" id="stock">
+                                <option value=""> - Search Product By Name, Barcode, Sku  - </option>
+                                    @foreach($stock as $x)
+                                    <option value="{{$x['stock_id']}}"  data-id="{{$x['barcode']}} - {{$x['products']['name']}} @foreach($x['varians'] as $v) {{$v['value']}},  @endforeach">
+                                     {{$x['barcode']}} -  {{$x['products']['name']}} - 
+                                        @foreach($x['varians'] as $v) {{$v['value']}},  @endforeach
+                                    </option>
                                     @endforeach
-                                </h4>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <h6 class="example-title">Motor Type</h6>
+                            <h4 class="example-title">QTY</h4>
                             <div class="example">
-                                <h4>
-                                @foreach($data['productstype'] as $t)
-                                    {{$t['type']['name']}},
-                                @endforeach
-                                </h4>
+                                <input type="text"  class="form-control varianClass" id="qty">
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <h6 class="example-title">Product Feature</h6>
+                            <h4 class="example-title">Buy Price</h4>
                             <div class="example">
-                                <h4>
-                                @foreach($data['productsfeature'] as $f)
-                                    {{$f['value']}}<br/>
-                                @endforeach
-                                </h4>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp. </span>
+                                        </div>
+                                        <input class="form-control varianClass" placeholder="" type="text" id="price" name="price">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="col-md-6">
+                        <button id="btnVarian" class="btn btn-success pull-right"> <i class="icon wb-plus" aria-hidden="true"></i> Add Product</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-bordered ">
                 <div class="panel-heading">
-                    <div class="panel-actions">
-                        <div class="dropdown">
-                            <a class="panel-action" data-toggle="dropdown" href="#" aria-expanded="false"><i class="icon wb-settings" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu dropdown-menu-bullet" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px;">
-                            <a class="dropdown-item" href="{{route('product.varian.add', $data['products_id'])}}" role="menuitem"><i class="icon wb-plus" aria-hidden="true"></i> Add Varian</a>
-                            </div>
-                        </div>
-                    </div>
-                    <h4 class="panel-title">Product Varian List</h4>
+                    <h3 class="panel-title">Product List</h3>
                 </div>
-                
                 <div class="panel-body container-fluid" id="variansList">
-                    @if(empty($data['productsvarians']))
-                        <div class="text-center">
-                            <h2>This Product Doesn't have varians</h2>
-                            <a href="javascript:;" data-target="#exampleFormModal" data-toggle="modal" class="btn btn-primary"><i class="icon wb-plus"></i> Add Varian</a>
-                        </div>
-                    @else
-                        @foreach($data['stock'] as $x)
-                        <a href="{{route('product.varian.edit',$x->stock_id)}}" style="text-decoration:none">
-                            <div class='card border border-primary'>
-                                <div class='card-block'>
-                                    <h4 class='card-title'>
-                                        @foreach($x['varians'] as $v)
-                                            {{$v['value']}}
-                                        @endforeach
-                                    <span style='float:right;'><button class='btn btn-primary btn-sm ' ><i class='icon wb-pencil' aria-hidden='true'></i></button></span></h4>
-                                    <p class='card-text'>Rp. {{number_format($x['price'],0,",",".")}} | Stock {{$x['stock']}} </p>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-                    @endif
-                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-body container-fluid">
+            <div class="row row-lg">
+                <div class="col-md-8">
+                    <p>Total</p>
+                  
+                    <h2 id="totalPo"></h2>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary" id="saveAll">Save</button>
+                    <button type="reset" class="btn btn-primary">Reset</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleFormModal" aria-hidden="false" aria-labelledby="exampleFormModalLabel" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-simple">
-    <form class="modal-content" action="{{route('product.addvarian',$data['products_id'])}}" method="post">
-    @csrf
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="exampleFormModalLabel">Set The Varians</h4>
-        </div>
-        <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <p>Product Varians, example : Warna, Komposisi.<code>use "Enter" to each product feature</code></p>
-                <div class="example">
-                    <input type="text" name="varian" class="form-control" data-plugin="tokenfield" value=""/>
-                </div>
-            </div>
-            <div class="col-md-12 float-right">
-            <button class="btn btn-primary btn-outline"  type="submit">Add Varian</button>
-            </div>
-        </div>
-        </div>
-    </form>
-    </div>
-</div>
-<!-- End Modal -->
 @endsection
 @section('custom_scripts')
 <script src="{{ asset('global/vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
@@ -244,4 +196,103 @@
 <script src="{{asset('global/vendor/typeahead-js/bloodhound.min.js')}}"></script>
 <script src="{{asset('global/vendor/typeahead-js/typeahead.jquery.min.js')}}"></script>
 <script src="{{asset('global/vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
+<script>
+    var total = "";
+    var varData = [];
+    function guid() {
+       function s4() {
+           return Math.floor((1 + Math.random()) * 0x10000)
+           .toString(16)
+           .substring(1);
+       }
+       return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+    function no_po() {
+       function s4() {
+           return Math.floor((1 + Math.random()) * 0x10000)
+           .toString(16)
+           .substring(1);
+       }
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var output = d.getFullYear()  +
+    ((''+month).length<2 ? '0' : '') + month +
+    ((''+day).length<2 ? '0' : '') + day;
+       return  "PO."+ output +"."+s4() + s4();
+    }
+    $(document).ready(function()  {
+        var nopo = no_po();
+        $('#noPo').val(nopo.toUpperCase());
+    });
+    function comma(val){
+       while (/(\d+)(\d{3})/.test(val.toString())){
+       val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+       }
+       return val;
+    }
+    //VARIAN SUBMIT
+    $('#btnVarian').click(function(){
+       var price = $('#price').val();
+       var stock = $('#stock').val();
+       var qty = $('#qty').val();
+       var attr = $('#stock option:selected').data('id');
+       var id = guid();
+       var data = {
+           'id':id,
+           'price':price,
+           'stock':stock,
+           'qty':qty,
+           'attr':attr,
+       };
+       total = +price * +qty;
+       var totalx = $('#total').val();
+       var total3 = +total + +totalx;
+       var total2 = "Rp. "+comma(total3);
+
+       $('#total').val(total3);
+       $('#totalPo').html(total2);
+       varData.push(data);
+       $('#arrayStock').val(JSON.stringify(varData));
+       $('input.varianClass').val('');
+       var list = "<div class='card border border-primary'><div class='card-block'><h4 class='card-title'>"+attr+"<span style='float:right;'><a href='javascript:;' id='btnHapus' data-id='"+id+"' class='btn btn-danger btn-sm btn-hapus' ><i class='icon wb-close' aria-hidden='true'></i></a></span></h4><p class='card-text'>Rp. "+comma(price)+" | Qty "+qty+" </p></div></div>";
+       $('#variansList').append(list);
+       console.log(varData);
+    });
+    const filterInPlace = (array, predicate) => {
+        let end = 0;
+        for (let i = 0; i < array.length; i++) {
+            const obj = array[i];
+            if (predicate(obj)) {
+                array[end++] = obj;
+            }
+        }
+        array.length = end;
+    };
+
+    $('body').on('click', 'a.btn-hapus', function(e) {
+        e.preventDefault();
+        var x = $(this).data('id');
+        var result = varData.find(obj => {
+            return obj.id === x
+        })
+        var total = +result.price * +result.qty;
+        var totalx = $('#total').val();
+        var total3 =  +totalx - +total;
+        var total2 = "Rp. "+comma(total3);
+
+        $('#total').val(total3);
+        $('#grandTotal').val(total3);
+        $('#totalPo').html(total2);
+        console.log(result);
+        const toDelete = new Set([x]);
+        filterInPlace(varData, obj => !toDelete.has(obj.id));
+        console.log(varData);
+        $('#arrayStock').val(JSON.stringify(varData));
+        $(this).parent().parent().parent().parent().remove();
+    });
+    $('#saveAll').click(function(){
+       $('#formVarian').submit();
+    });
+</script>
 @endsection

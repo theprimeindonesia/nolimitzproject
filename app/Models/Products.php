@@ -70,4 +70,8 @@ class Products extends Model
     {
         return $this->hasMany('App\Models\ProductsMotor', 'products_id');
     }
+    public function productsvarians()
+    {
+        return $this->hasMany('App\Models\ProductsVarians', 'products_id');
+    }
 }

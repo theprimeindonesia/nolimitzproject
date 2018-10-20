@@ -86,6 +86,8 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::post('/podet/{id}', 'Web\PurchaseController@podet')->name('purchase.podet');
         Route::get('/return/{id}', 'Web\PurchaseController@return')->name('purchase.return');
         Route::post('/return/update/{id}', 'Web\PurchaseController@returnupdate')->name('purchase.return.update');
+        Route::get('/po/{id}', 'Web\PurchaseController@po')->name('purchase.po');
+
     });
 
      //PRODUCT
@@ -93,6 +95,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::get('/', 'Web\ProductController@index')->name('product.index');
         Route::get('/create', 'Web\ProductController@create')->name('product.create');
         Route::post('/store', 'Web\ProductController@store')->name('product.store');
+        Route::post('/addvarian/{id}', 'Web\ProductController@addvarian')->name('product.addvarian');
         Route::get('/detail/{id}', 'Web\ProductController@detail')->name('product.detail');
         Route::get('/edit/{id}', 'Web\ProductController@edit')->name('product.edit');
         Route::post('/update/{id}', 'Web\ProductController@update')->name('product.update');
@@ -146,5 +149,20 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
            Route::post('/destroy/{id}', 'Web\OrdersController@destroy')->name('orders.destroy');
            Route::get('/paid/{id}', 'Web\OrdersController@paid')->name('orders.paid');
 
+           Route::group(['prefix' => '/return'],function(){
+            Route::get('/', 'Web\OrdersController@return')->name('orders.return');
+            });
        });
+
+       //SHIPPING
+       Route::group(['prefix' => '/shipping'],function(){
+        Route::get('/', 'Web\ShippingController@index')->name('shipping.index');
+        Route::get('/detail/{id}', 'Web\ShippingController@detail')->name('shipping.detail');
+        Route::post('/destroy/{id}', 'Web\ShippingController@destroy')->name('shipping.destroy');
+        Route::get('/label/{id}', 'Web\ShippingController@label')->name('shipping.label');
+        Route::post('/resi', 'Web\ShippingController@resi')->name('shipping.resi');
+
+    });
+
+
 });

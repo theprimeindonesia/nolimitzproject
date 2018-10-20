@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 Use App\Models\Products;
 Use App\Models\ProductsFeature;
+Use App\Models\ProductsVarians;
 Use App\Models\ProductsType;
 Use App\Models\ProductsMotor;
 Use App\Models\Categories;
@@ -14,6 +15,7 @@ Use App\Models\Motor;
 Use App\Models\Type;
 Use App\Models\Uom;
 Use App\Models\Stock;
+Use App\Models\StockLog;
 Use App\Models\Varians;
 Use App\Models\Images;
 Use File;
@@ -32,11 +34,6 @@ class ProductController extends Controller
         return view('product.index',compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $type = Type::all();
@@ -53,6 +50,23 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    public function addvarian(Request $request,$id)
+    {
+        $this->validate($request, [
+            'varian' => 'required',
+        ]);
+        $varian = $request['varian'];
+        $varianData = explode(",",$varian);
+        
+        foreach($varianData as $fd){
+            $varians = new ProductsVarians;
+            $varians->name = $fd;
+            $varians->products_id = $id;
+            $varians->save();
+        }
+        return back();
+    }
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -72,6 +86,15 @@ class ProductController extends Controller
             $productsfeature = new ProductsFeature;
             $productsfeature->value = $fd;
             $product->productsfeature()->save($productsfeature);
+        }
+
+        $variansvalue = $input['variansvalue'];
+        $variansvalueData = explode(",",$variansvalue);
+        
+        foreach($variansvalueData as $vd){
+            $productsvarian = new ProductsVarians;
+            $productsvarian->name = $vd;
+            $product->productsvarians()->save($productsvarian);
         }
 
         $type = $input['type_id'];
@@ -113,6 +136,11 @@ class ProductController extends Controller
                     $varian->value = $v['value'];
                     $stock->varians()->save($varian);
                 }
+                $stocklog = new StockLog;
+                $stocklog->qty = $x['stock'];
+                $stocklog->stock()->associate($stock);
+                $stocklog->description = "PRODUCT MASTER";
+                $stocklog->save();
 
                 $imageData = $x['image'];
                 @list($type, $imageData) = explode(';', $imageData);
@@ -137,6 +165,12 @@ class ProductController extends Controller
             $stock->secondary = $input['secondary'];
             $stock->uom_id = $input['uom_id'];
             $product->stock()->save($stock);
+
+            $stocklog = new StockLog;
+            $stocklog->qty = $input['stock'];
+            $stocklog->stock()->associate($stock);
+            $stocklog->description = "PRODUCT MASTER";
+            $stocklog->save();
 
             $imageData = $input['image_single'];
             @list($type, $imageData) = explode(';', $imageData);

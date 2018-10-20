@@ -147,7 +147,7 @@
                     <h4 class="example-title"> Varian </h4>
                     <p>Product Varian, example : warna, Komposisi. <code>use "Enter" to each product varian</code></p>
                     <div class="example">
-                        <input type="text" id="variansValue" class="form-control" data-plugin="tokenfield" value=""/>
+                        <input type="text" id="variansValue" name="variansvalue" class="form-control" data-plugin="tokenfield" value=""/>
                     </div>
                     <a href="javascript:void(0)" class="btn btn-block btn-success" id="btnAddVarian">Add Varian</a>
                 </div>

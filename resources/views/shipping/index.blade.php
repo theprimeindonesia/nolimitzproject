@@ -31,61 +31,13 @@
 <script src="{{ asset('global/vendor/asrange/jquery-asRange.min.js') }}"></script>
 <script src="{{ asset('global/vendor/bootbox/bootbox.js') }}"></script>
 @endsection
-@section('custom_page')
-<script src="{{ asset('global/js/Plugin/datatables.js') }}"></script>
-<script src="{{ asset('admin/assets/examples/js/tables/datatable.js') }}"></script>
-@endsection
+
 @section('content')
 <!-- Panel Basic -->
 <div class="page-content">
-    <div class="row">
-        <!-- Start Row -->
-        <div class="col-xl-4 col-md-6 info-panel">
-            <div class="card card-shadow">
-                <div class="card-block bg-white p-20">
-                    <button type="button" class="btn btn-floating btn-sm btn-warning">
-                    <i class="icon wb-shopping-cart"></i>
-                    </button>
-                    <span class="ml-15 font-weight-400">ORDERS</span>
-                    <div class="content-text text-center mb-0">
-                        <span class="font-size-40 font-weight-100">{{$data->count()}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-6 info-panel">
-            <div class="card card-shadow">
-                <div class="card-block bg-white p-20">
-                    <button type="button" class="btn btn-floating btn-sm btn-danger">
-                    <i class="icon fa-dollar"></i>
-                    </button>
-                    <span class="ml-15 font-weight-400">INCOM</span>
-                    <div class="content-text text-center mb-0">
-                        <span class="font-size-40 font-weight-100">Rp. {{number_format($data->sum('grand_total'),0,',','.')}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-6 info-panel">
-            <a href="{{route('orders.return')}}" style="text-decoration:none">
-                <div class="card card-shadow">
-                    <div class="card-block bg-white p-20">
-                        <button type="button" class="btn btn-floating btn-sm btn-primary">
-                        <i class="icon wb-user"></i>
-                        </button>
-                        <span class="ml-15 font-weight-400">RETURN</span>
-                        <div class="content-text text-center mb-0">
-                            <span class="font-size-40 font-weight-100">{{$retur->count()}}</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- End Third Row -->
-    </div>
     <div class="panel panel-bordered">
         <div class="panel-heading">
-            <h3 class="panel-title">Sales Order</h3>
+            <h3 class="panel-title">Shipping Order</h3>
         </div>
         <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -93,11 +45,10 @@
                     <tr>
                         <th>NO PO</th>
                         <th>Tanggal</th>
+                        <th>Tracking Number</th>
                         <th>Member</th>
-                        <th>Total</th>
-                        <th>Discon</th>
-                        <th>Grand Total</th>
                         <th>Status</th>
+                        <th>Label/Resi</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -105,11 +56,10 @@
                     <tr>
                         <th>NO PO</th>
                         <th>Tanggal</th>
+                        <th>Tracking Number</th>
                         <th>Member</th>
-                        <th>Total</th>
-                        <th>Discon</th>
-                        <th>Grand Total</th>
                         <th>Status</th>
+                        <th>Label/Resi</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
@@ -119,17 +69,13 @@
                     <tr>
                         <td>{{$x->no_invoice}}</td>
                         <td>{{$x->created_at}}</td>
+                        <td>{{$x->resi}}</td>
                         <td>{{$x->members->firstname}} {{$x->members->lastname}}</td>
-                        <td>{{number_format($x->total,0,',','.')}}</td>
-                        <td>{{number_format($x->discon,0,',','.')}}</td>
-                        <td>{{number_format($x->grand_total,0,',','.')}}</td>
                         <td>
                             @if($x->status === 'ORDER')
                             <span class="badge badge-warning">PO</span>
                             @elseif($x->status === 'PAID')
                             <span class="badge badge-success">PAID</span>
-                            @elseif($x->status === 'PACKAGING')
-                            <span class="badge badge-danger">PACKAGING</span>
                             @elseif($x->status === 'DELIVERING')
                             <span class="badge badge-warning">DELIVERING</span>
                             @elseif($x->status === 'RECEIVED')
@@ -139,7 +85,16 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('orders.detail',$x->orders_id)}}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
+                            @if($x->status === 'PAID')
+                            <a href="{{route('shipping.label',$x->orders_id)}}"  target="_blank" class="btn btn-primary btn-sm">PRINT LABEL</a>
+                            @elseif($x->status === 'DELIVERING' and empty($x['resi']))
+                            <button class="btn btn-warning" type="button" id="btnResi" data-id="{{$x['orders_id']}}">INPUT TRACKING NUMBER</button>
+                            @elseif($x->status === 'DELIVERING' and !empty($x['resi']))
+                            <button class="btn btn-success" type="button">DELIVERING TO CUSTOMER</button>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{route('shipping.detail',$x->orders_id)}}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
                             <form id="remove-user" action="{{route('orders.destroy',$x->orders_id)}}" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf
@@ -153,4 +108,49 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleFormModal" aria-hidden="false" aria-labelledby="exampleFormModalLabel" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple">
+        <form class="modal-content" action="{{route('shipping.resi')}}" method="post">
+            @csrf
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="exampleFormModalLabel">Set Expedition</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 form-group">
+                        <select name="expeditions_id" id="" class="form-control">
+                            @foreach($expeditions as $e)
+                                <option value="{{$e['expeditions_id']}}">{{$e['name']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xl-6 form-group">
+                        <input type="text" class="form-control" name="resi" placeholder="Tracking Number (Resi)" required="true">
+                        <input type="hidden" class="form-control" name="orders_id" id="orderId">
+                    </div>
+                    <div class="col-md-12 float-right">
+                        <button class="btn btn-primary btn-outline" type="submit">Set Expedition</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Modal -->
 @endsection
+@section('custom_page')
+<script src="{{ asset('global/js/Plugin/datatables.js') }}"></script>
+<script src="{{ asset('admin/assets/examples/js/tables/datatable.js') }}"></script>
+<script>
+    $('#btnResi').click(function(){
+        var id = $(this).data('id');
+        $('#orderId').val(id);
+        $('#exampleFormModal').modal('show');
+    });
+</script>
+@endsection
+
