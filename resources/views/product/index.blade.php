@@ -125,8 +125,7 @@
                         </td>
                         <td>
                             <a href="{{route('product.detail',$x->products_id)}}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-eye" aria-hidden="true"></i></a>
-                            <form id="remove-user" action="" method="POST" style="display: inline-block;">
-                                {{method_field('DELETE')}}
+                            <form id="remove-user" action="{{route('product.destroy',$x->products_id)}}" method="POST" style="display: inline-block;">
                                 @csrf
                                 <button onclick="return confirm('Are you sure you want to delete this ?');" type="submit" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row"><i class="icon wb-trash" aria-hidden="true"></i></button>
                             </form>

@@ -95,6 +95,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::get('/', 'Web\ProductController@index')->name('product.index');
         Route::get('/create', 'Web\ProductController@create')->name('product.create');
         Route::post('/store', 'Web\ProductController@store')->name('product.store');
+        Route::post('/destroy/{id}', 'Web\ProductController@destroy')->name('product.destroy');
         Route::post('/addvarian/{id}', 'Web\ProductController@addvarian')->name('product.addvarian');
         Route::get('/detail/{id}', 'Web\ProductController@detail')->name('product.detail');
         Route::get('/edit/{id}', 'Web\ProductController@edit')->name('product.edit');
@@ -152,6 +153,8 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
            Route::group(['prefix' => '/return'],function(){
             Route::get('/', 'Web\OrdersController@return')->name('orders.return');
             });
+           Route::get('/cek', 'Web\OrdersController@cek')->name('orders.index');
+
        });
 
        //SHIPPING
