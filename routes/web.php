@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 Route::get('/admin', function () {
-    return redirect()->route('admin.home');
+    return redirect()->route('admin.dashboard');
 });
 
  // Authentication Routes...
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
     //logout
     Route::post('/logout', 'Admin\LoginController@logout')->name('admin.logout');
     //home
-    Route::get('/home', 'HomeController@index')->name('admin.home');
+    Route::get('/dashboard', 'HomeController@index')->name('admin.dashboard');
     //roles
     Route::resource('/roles','Web\RoleController')->except([
         'show'
@@ -153,7 +153,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
            Route::group(['prefix' => '/return'],function(){
             Route::get('/', 'Web\OrdersController@return')->name('orders.return');
             });
-           Route::get('/cek', 'Web\OrdersController@cek')->name('orders.index');
+        //    Route::get('/cek', 'Web\OrdersController@cek')->name('orders.index');
 
        });
 

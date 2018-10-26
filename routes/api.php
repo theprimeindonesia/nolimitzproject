@@ -16,9 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
-    });
-    //Home
-    Route::get('/home', 'API\HomeController@index');
+    });    
     //Auth
     Route::post('/logout', 'AuthController@logout');
     //Ulasan Blogs
@@ -27,6 +25,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/createBalasUlasanBlogs/{ulasanblogid}', 'API\UlasanBlogsController@createBalasUlasanBlogs');
     Route::patch('/updateBalasUlasanBlogs/{balasulasanblogid}', 'API\UlasanBlogsController@updateBalasUlasanBlogs');
 });
+
+//Home
+Route::get('/home', 'API\HomeController@index');
+Route::post('/subscribe', 'API\HomeController@subscribe');
+
 
 //Blogs
 Route::get('/blogs', 'API\BlogsController@blogs');
