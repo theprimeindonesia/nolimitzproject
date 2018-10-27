@@ -30,6 +30,9 @@ Route::middleware('auth:api')->group(function () {
 Route::get('/home', 'API\HomeController@index');
 Route::post('/subscribe', 'API\HomeController@subscribe');
 
+//Catalog
+Route::get('/catalog', 'API\CatalogController@index');
+Route::post('/catalogfilter', 'API\CatalogController@filter');
 
 //Blogs
 Route::get('/blogs', 'API\BlogsController@blogs');
