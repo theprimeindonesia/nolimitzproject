@@ -19,6 +19,15 @@ Route::middleware('auth:api')->group(function () {
     });    
     //Auth
     Route::post('/logout', 'AuthController@logout');
+    //checkout
+    Route::get('/checkout', 'API\OrdersController@index');
+
+    //Ulasan Products
+    Route::post('/createulasanproducts/{products_id}', 'API\ProductsController@createulasanproducts');
+    Route::patch('/updateulasanproducts/{ulasanproductsid}', 'API\ProductsController@updateulasanproducts');
+    Route::post('/createbalasulasanproducts/{ulasanproductsid}', 'API\ProductsController@createbalasulasanproducts');
+    Route::patch('/updatebalasulasanproducts/{balasulasanproductsid}', 'API\ProductsController@updatebalasulasanproducts');
+
     //Ulasan Blogs
     Route::post('/createUlasanBlogs/{blogid}', 'API\UlasanBlogsController@createUlasanBlogs');
     Route::patch('/updateUlasanBlogs/{ulasanblogid}', 'API\UlasanBlogsController@updateUlasanBlogs');
@@ -33,6 +42,9 @@ Route::post('/subscribe', 'API\HomeController@subscribe');
 //Catalog
 Route::get('/catalog', 'API\CatalogController@index');
 Route::post('/catalogfilter', 'API\CatalogController@filter');
+
+//Catalog
+Route::get('/products/{products_id}', 'API\ProductsController@index');
 
 //Blogs
 Route::get('/blogs', 'API\BlogsController@blogs');

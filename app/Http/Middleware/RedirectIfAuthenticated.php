@@ -15,7 +15,7 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null, $redirectTo = '/home')
+    public function handle($request, Closure $next, $guard = null, $redirectTo = '/dashboard')
     {
         if (Auth::guard($guard)->check()) {
             return redirect($redirectTo);

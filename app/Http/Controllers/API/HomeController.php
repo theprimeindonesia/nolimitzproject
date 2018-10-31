@@ -21,20 +21,22 @@ class HomeController extends Controller
         $categories = Categories::all();
         $banner = Banner::orderBy('created_at','desc')->take(3)->get();
         $bestseller = Products::
-        leftJoin('stock','products.products_id','=','stock.products_id')
+        leftJoin('ratings','products.products_id','=','ratings.products_id')
+        ->leftJoin('stock','products.products_id','=','stock.products_id')
         ->leftJoin('images','stock.stock_id','=','images.stock_id')
         ->leftJoin('order_details as a','stock.stock_id','=','a.stock_id')
         ->leftJoin('orders','orders.orders_id','=','a.orders_id')
-        ->select('products.*','images.image', DB::raw('SUM(a.qty) as bestsell'))
+        ->select('products.*','stock.price','images.image', DB::raw('SUM(a.qty) as bestsell'), DB::raw('FLOOR(AVG(ratings.rating)) as rating'))
         ->where('orders.status','DONE')
         ->groupBy('products.products_id')
-        ->orderBy('bestsell', 'desc')
+        ->orderBy('created_at', 'desc')
         ->take(8)
         ->get();
         $newarrival = Products::
         leftJoin('stock','products.products_id','=','stock.products_id')
+        ->leftJoin('ratings','products.products_id','=','ratings.products_id')
         ->leftJoin('images','stock.stock_id','=','images.stock_id')
-        ->select('products.*','images.image')
+        ->select('products.*','stock.price','images.image', DB::raw('FLOOR(AVG(ratings.rating)) as rating'))
         ->orderBy('created_at','desc')
         ->groupBy('products.products_id')
         ->take(8)
@@ -44,10 +46,11 @@ class HomeController extends Controller
         $getmerk = Merk::first();
         $merchantstore = Products::
         leftJoin('merk','merk.merk_id','=','products.merk_id')
+        ->leftJoin('ratings','products.products_id','=','ratings.products_id')
         ->leftJoin('stock','products.products_id','=','stock.products_id')
         ->leftJoin('images','stock.stock_id','=','images.stock_id')
-        ->select('products.*','images.image','merk.image as image_merk')
-        ->where('merk.merk_id',$getmerk->merk_id)
+        ->select('products.*','stock.price','images.image','merk.image as image_merk', DB::raw('FLOOR(AVG(ratings.rating)) as rating'))
+        ->where('merk.merk_id', $getmerk->merk_id)
         ->groupBy('products.products_id')
         ->orderBy('created_at','desc')
         ->take(4)
@@ -64,7 +67,7 @@ class HomeController extends Controller
         $contact = Contact::with('addresses')->get();
         $jumlahmember = Members::count();
         $jumlahproduct = Products::count();
-        $data[] = [
+        $data = [
             "categories" => $categories,
             "banner" => $banner,
             "bestseller" => $bestseller,

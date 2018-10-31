@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
 });
