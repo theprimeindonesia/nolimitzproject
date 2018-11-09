@@ -9,7 +9,7 @@ use App\Models\Blogs;
 use App\Models\Products;
 use App\Models\Members;
 use App\Models\Ulasan;
-use App\Models\Varians;
+use App\Models\Stock;
 use DB;
 class ProductsController extends Controller
 {
@@ -17,19 +17,18 @@ class ProductsController extends Controller
     {
         $expeditions = Expeditions::all();
         $blogs = Blogs::orderBy('created_at','desc')->take(4)->get();
-        $products = Products::
-        leftJoin('ratings','products.products_id','=','ratings.products_id')
+        $products = Products::where('products.products_id', $products_id)
+        ->leftJoin('ratings','products.products_id','=','ratings.products_id')
         ->select('products.*', DB::raw('FLOOR(AVG(ratings.rating)) as rating'))
-        ->where('products.products_id', $products_id)
         ->groupBy('products.products_id')
         ->with('stock.images')
-        ->get();
-        $varians = Varians::
-        leftJoin('stock', 'stock.stock_id', '=', 'varians.stock_id')
-        ->leftJoin('products', 'stock.products_id','=','products.products_id')
-        ->select('varians.*','stock.stock_id')
-        ->where('products.products_id', $products_id)
-        ->get();
+        ->first();
+
+        $varians = Stock::whereHas('products',
+        function($q) use ($products_id) {
+            $q->where('products_id', $products_id);
+        })->with('varians')->get();
+
         $getcategory = Products::where('products_id',$products_id)->pluck('categories_id');
         $similarproduct = Products::
         leftJoin('stock','products.products_id','=','stock.products_id')
