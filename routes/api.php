@@ -52,13 +52,11 @@ Route::post('/catalogfilter', 'API\CatalogController@filter');
 Route::get('/products/{products_id}', 'API\ProductsController@index');
 
 // //Blogs
-// Route::get('/blogs', 'API\BlogsController@blogs');
-// Route::get('/blogs/{id}', 'API\BlogsController@categoryBlogs');
-// Route::get('/posts/{url}', 'API\BlogsController@blogPost');
+Route::get('/blogs', 'API\BlogsController@index');
+Route::get('/blogs/category/{category_id}', 'API\BlogsController@getBlogCategory');
+Route::get('/blogs/post/{url}', 'API\BlogsController@getBlogUrl');
 
-// //Contact
-// Route::get('/contact','API\ContactController@contact');
-// Route::post('/message','API\ContactController@message');
+
 
 //Auth
 Route::post('/login', 'AuthController@login');
