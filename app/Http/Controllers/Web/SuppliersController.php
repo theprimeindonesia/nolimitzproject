@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Addresses;
 use App\Models\Suppliers;
+use Steevenz\Rajaongkir;
 
 class SuppliersController extends Controller
 {
@@ -27,6 +28,14 @@ class SuppliersController extends Controller
      */
     public function create()
     {
+        $config['api_key'] = '43f21be99f3e210597f6d078c94725ba';
+        $config['account_type'] = 'pro';
+
+        $rajaongkir = new Rajaongkir($config);
+        $banks = Bank::where('status','Aktif')->get();
+        $cart_total = Cart::total();
+        $kirim = 10000;
+        $province = $rajaongkir->getProvinces();
         return view('suppliers.create');
     }
 

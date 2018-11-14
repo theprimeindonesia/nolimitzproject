@@ -8,6 +8,7 @@ use App\Models\Stock;
 use App\Models\StockLog;
 use App\Models\ReturOrders;
 use App\Models\Orders;
+use App\Models\Referrals;
 use App\Models\OrderDetails;
 use App\Models\OrderDelivery;
 
@@ -51,8 +52,25 @@ class OrdersController extends Controller
             $stock_log->orders_id = $x['orders_id'];
             $stock_log->save();
         }
+
+        $members_id = $order->members_id;
+
+        $found = false;
+        $array = array();
+        while(!$found){
+            $refferal = Refferals::where('members_b_id',$members_id)->pluck('members_a_id');
+           if($refferal === null){
+            $found = true;
+           }else{
+            $array[] =  [
+                $refferal,
+           ];
+           $found = false;
+           }
+        }
         
-        return back();
+        
+        return $array;
     }
 
     public function return()
@@ -124,5 +142,31 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function cek()
+    {
+       
+        $members_id = "636c4401-eec5-4e9b-b774-b142d72a7aeb";
+
+        $found = false;
+        $array = array();
+        while($found !== true){
+            $refferal = Referrals::where('members_b_id', $members_id)->first();
+            $members_a_id = $refferal['members_a_id'];
+            $members_id = $members_a_id;
+           if(empty($members_a_id)){
+                $found = true;
+           }else{
+                $array[] =  [
+                    $members_a_id,
+                ];
+                $found = false;
+           }
+        }
+        
+        
+        return $array;
     }
 }
