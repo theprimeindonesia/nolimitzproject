@@ -16,7 +16,7 @@ class BlogsController extends Controller
         $category      = CategoryBlogs::select('category_blogs_id','name_ind','name_en')->get();
         $latest_blog   = Blogs::getLatestBlog()->paginate(5);
 
-        $result[] = [
+        $result = [
             "blogs"         => $blogs,
             "category"      => $category,
             "latest_blog"   => $latest_blog
@@ -30,7 +30,7 @@ class BlogsController extends Controller
         $category      = CategoryBlogs::select('category_blogs_id','name_ind','name_en')->get();
         $latest_blog   = Blogs::getLatestBlog()->paginate(5);
 
-        $result[] = [
+        $result = [
             "blogs"         => $blogs,
             "category"      => $category,
             "latest_blog"   => $latest_blog
@@ -52,7 +52,7 @@ class BlogsController extends Controller
             $query->orderBy('created_at','asc')->get();
         }])->orderBy('created_at', 'desc')->get();
 
-        $result[] = [
+        $result = [
             "post"         => $post,
             "related_post" => $related_post,
             "category"     => $category,
