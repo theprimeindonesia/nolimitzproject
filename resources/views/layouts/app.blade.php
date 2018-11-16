@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('global/vendor/intro-js/introjs.css') }}">
     <link rel="stylesheet" href="{{ asset('global/vendor/slidepanel/slidePanel.css') }}">
     <link rel="stylesheet" href="{{ asset('global/vendor/flag-icon-css/flag-icon.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('global/vendor/summernote/summernote.css') }}">
     @yield('custom_styles')
     
     <!-- Fonts -->
@@ -358,6 +360,8 @@
     <script src="{{ asset('global/vendor/intro-js/intro.js') }}"></script>
     <script src="{{ asset('global/vendor/screenfull/screenfull.js') }}"></script>
     <script src="{{ asset('global/vendor/slidepanel/jquery-slidePanel.js') }}"></script>
+
+    <script src="{{ asset('global/vendor/summernote/summernote.min.js') }}"></script>
     @yield('custom_scripts')
     
     <!-- Scripts -->
@@ -381,6 +385,10 @@
     <script src="{{ asset('global/js/Plugin/asscrollable.js') }}"></script>
     <script src="{{ asset('global/js/Plugin/slidepanel.js') }}"></script>
     <script src="{{ asset('global/js/Plugin/switchery.js') }}"></script>
+
+
+    <script src="{{ asset('global/js/Plugin/summernote.js') }}"></script>
+    <script src="{{ asset('assets/examples/js/forms/editor-summernote.js') }}"></script>
     @yield('custom_page')
   </body>
 </html>

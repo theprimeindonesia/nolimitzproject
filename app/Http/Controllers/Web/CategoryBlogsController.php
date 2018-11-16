@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CategoryBlogs;
+use App\Models\Blogs;
 
 class CategoryBlogsController extends Controller
 {
@@ -103,8 +104,13 @@ class CategoryBlogsController extends Controller
      */
     public function destroy($id)
     {
-        $data = CategoryBlogs::find($id);
-        $data->delete();
+        $blogs  = Blogs::where('category_blogs_id', $id)->get();
+        $cek    = $blogs->count();
+
+        if($cek==0){
+            $data = CategoryBlogs::find($id);
+            $data->delete();
+        }
 
         return redirect()->route('category-blogs.index');
     }

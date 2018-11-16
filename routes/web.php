@@ -120,6 +120,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
 
     //CategoryBlogs
     Route::resource('/category-blogs','Web\CategoryBlogsController')->except(['show']);
+    Route::resource('/blogs','Web\BlogsController')->except(['show']);
     
       //MEMBERS
       Route::group(['prefix' => '/members'],function(){

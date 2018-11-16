@@ -104,6 +104,11 @@
                   <span class="site-menu-title">Category Blogs</span>
                 </a>
               </li>
+              <li class="site-menu-item {{ Request::is('admin/blogs') ? 'active':''}}">
+                <a href="{{ route('blogs.index') }}">
+                  <span class="site-menu-title">Blogs</span>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="site-menu-item has-sub {{ Request::is(['admin/members', 'admin/orders']) ? 'active open':''}}">
