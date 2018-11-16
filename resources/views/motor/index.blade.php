@@ -77,7 +77,7 @@
                     @foreach ($data as $key => $data)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td><img src="../images/motor/{{ $data->image }}" width='100px'></td>
+                        <td><img src="{{ asset('images/motor/'.$data->image) }}" width='100px'></td>
                         <td>{{ $data->name }}</td>
                         <td>
                             <a href="{{ route('motor.edit', $data->motor_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>

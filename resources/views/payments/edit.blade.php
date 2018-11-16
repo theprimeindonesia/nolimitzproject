@@ -105,7 +105,7 @@
 											</div>
 										</div>
 										<hr/>
-										<img src="{{url('/public/images/payments',$data['image'])}}" width="100">
+										<img src="{{ asset('images/payments/'. $data['image']) }}" width="100">
 									</div>
 								</div>
 							</div>

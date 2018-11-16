@@ -51,8 +51,8 @@ class MotorController extends Controller
           
             $file       = $request->file('images');
             $ext        = $file->getClientOriginalExtension();
-            $fileName   = "motor-".$image_uuid.".$ext";
-            $upload_path ='images/motor';
+            $fileName    = "motor-".$image_uuid.".$ext";
+            $upload_path ='public/images/motor';
             $request->file('images')->move($upload_path, $fileName);
             $data->image = $fileName;      
           }
@@ -100,14 +100,15 @@ class MotorController extends Controller
         ]);
 
         $image_uuid = Uuid::Uuid4();
-        $data =  Motor::find($id);
+        $data       =  Motor::find($id);
         $data->name = $request['name'];
         if(!is_null($request->file('images'))){            
           
-            $file       = $request->file('images');
-            $ext        = $file->getClientOriginalExtension();
-            $fileName   = "motor-".$image_uuid.".$ext";
-            $upload_path ='images/motor';
+            $file        = $request->file('images');
+            $ext         = $file->getClientOriginalExtension();
+            $fileName    = "motor-".$image_uuid.".$ext";
+            $upload_path ='public/images/motor';
+            $delete      = File::delete('public/images/motor/'.$data->image);
             $request->file('images')->move($upload_path, $fileName);
             $data->image = $fileName;      
           }
@@ -125,7 +126,7 @@ class MotorController extends Controller
     public function destroy($id)
     {
         $data = Motor::find($id);
-        $image_path = "images/motor/".$data['image'];
+        $image_path = "public/images/motor/".$data['image'];
         $delete = File::delete($image_path);
         if($delete){
             $data->delete();

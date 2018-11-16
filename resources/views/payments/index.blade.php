@@ -83,7 +83,7 @@
                     @foreach ($data as $key => $data)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td><img src="../public/images/payments/{{ $data->image }}"/></td>
+                        <td><img src="{{ asset('images/payments/'.$data->image) }}" style="width: 100px" /></td>
                         <td>{{ $data->name }}</td>
                         <td>{{ $data->no_account }}</td>
                         <td>{{ $data->status }}</td>

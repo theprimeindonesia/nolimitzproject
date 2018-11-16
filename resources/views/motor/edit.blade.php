@@ -46,7 +46,7 @@
 						<div class="form-group row">
 							<label class="col-md-3 form-control-label">Images: </label>
 							<div class="col-md-9">
-								<img src="{{ url('/images/motor/',$data['image'])}}" width='200px;'>
+								<img src="{{ asset('images/motor/'.$data['image'])}}" width='200px;'>
 								<div class="input-group input-group-file" data-plugin="inputGroupFile">
 									<input class="form-control" readonly="" type="text" value="{{$data['image']}}">
 										<div class="input-group-append">

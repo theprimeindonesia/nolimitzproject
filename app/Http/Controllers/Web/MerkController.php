@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Merk;
 use Ramsey\Uuid\Uuid;
+use File;
 
 class MerkController extends Controller
 {
@@ -39,19 +40,19 @@ class MerkController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name'   => 'required',
             'images' => 'required|image|mimes:jpg,jpeg,png',
         ]);
 
         $image_uuid = Uuid::Uuid4();
-        $merk = new Merk();
+        $merk       = new Merk();
         $merk->name = $request['name'];
         if(!is_null($request->file('images'))){            
           
-            $file       = $request->file('images');
-            $ext        = $file->getClientOriginalExtension();
-            $fileName   = "merk-".$image_uuid.".$ext";
-            $upload_path ='images/merk';
+            $file        = $request->file('images');
+            $ext         = $file->getClientOriginalExtension();
+            $fileName    = "merk-".$image_uuid.".$ext";
+            $upload_path ='public/images/merk';
             $request->file('images')->move($upload_path, $fileName);
             $merk->image = $fileName;      
           }
@@ -94,19 +95,21 @@ class MerkController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name'   => 'required',
             'images' => 'image|mimes:jpg,jpeg,png',
         ]);
 
         $image_uuid = Uuid::Uuid4();
-        $merk =  Merk::find($id);
+        $merk       =  Merk::find($id);
+
         $merk->name = $request['name'];
         if(!is_null($request->file('images'))){            
-          
+            
             $file       = $request->file('images');
             $ext        = $file->getClientOriginalExtension();
             $fileName   = "merk-".$image_uuid.".$ext";
-            $upload_path ='images/merk';
+            $upload_path='public/images/merk';
+            $delete     = File::delete('public/images/merk/'.$merk->image);
             $request->file('images')->move($upload_path, $fileName);
             $merk->image = $fileName;      
           }
@@ -123,9 +126,9 @@ class MerkController extends Controller
      */
     public function destroy($id)
     {
-        $data = Merk::find($id);
-        $image_path = "images/categories/".$data['image'];
-        $delete = File::delete($image_path);
+        $data       = Merk::find($id);
+        $image_path = "public/images/merk/".$data['image'];
+        $delete     = File::delete($image_path);
         if($delete){
             $data->delete();
 	        return redirect()->route('merk.index')

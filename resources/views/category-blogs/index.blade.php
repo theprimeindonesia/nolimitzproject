@@ -41,15 +41,15 @@
 <div class="page-content">
     <div class="panel panel-bordered">
         <div class="panel-heading">
-            <h3 class="panel-title">Product Merk Management</h3>
+            <h3 class="panel-title">Category Blogs Management</h3>
         </div>
         <div class="panel-body">
             @can('user-create')
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-15">
-                        <a href="{{ route('merk.create') }}" class="btn btn-outline btn-primary">
-                        <i class="icon wb-plus" aria-hidden="true"></i> Add New Merk
+                        <a href="{{ route('category-blogs.create') }}" class="btn btn-outline btn-primary">
+                        <i class="icon wb-plus" aria-hidden="true"></i> Add New Category Blog
                         </a>
                     </div>
                 </div>
@@ -58,30 +58,30 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                    <th>No</th>
-                        <th>Images</th>
-                        <th>Name</th>
+                        <th>No</th>
+                        <th>Name IND</th>
+                        <th>Name EN</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Images</th>
-                        <th>Name</th>
+                        <th>Name IND</th>
+                        <th>Name EN</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
                 <tbody>
                 @php($i = 1)
-                    @foreach ($merk as $key => $data)
+                    @foreach ($data as $key => $x)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td><img src="{{ asset('images/merk/'.$data->image) }}" width='100px'></td>
-                        <td>{{ $data->name }}</td>
+                        <td>{{ $x->name_ind }}</td>
+                        <td>{{ $x->name_en }}</td>
                         <td>
-                            <a href="{{ route('merk.edit', $data->merk_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
-                            <form id="remove-user" action="{{ route('merk.destroy', $data->merk_id) }}" method="POST" style="display: inline-block;">
+                            <a href="{{ route('category-blogs.edit', $x->category_blogs_id) }}" class="btn btn-sm btn-icon btn-pure btn-default on-default edit-row"><i class="icon wb-edit" aria-hidden="true"></i></a>
+                            <form id="remove-user" action="{{ route('category-blogs.destroy', $x->category_blogs_id) }}" method="POST" style="display: inline-block;">
                                 {{method_field('DELETE')}}
                                 @csrf
                                 <button onclick="return confirm('Are you sure you want to delete this ?');" type="submit" class="btn btn-sm btn-icon btn-pure btn-default on-default remove-row"><i class="icon wb-trash" aria-hidden="true"></i></button>
@@ -95,3 +95,4 @@
     </div>
 </div>
 @endsection
+        <!-- End Panel Basic -->

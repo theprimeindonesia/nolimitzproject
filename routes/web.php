@@ -117,6 +117,10 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         'show'
     ]);
 
+
+    //CategoryBlogs
+    Route::resource('/category-blogs','Web\CategoryBlogsController')->except(['show']);
+    
       //MEMBERS
       Route::group(['prefix' => '/members'],function(){
         Route::get('/', 'Web\MembersController@index')->name('members.index');
