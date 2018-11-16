@@ -341,6 +341,19 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <h4 class="example-title">Buy Price</h4>
+                            <div class="example">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp. </span>
+                                        </div>
+                                        <input class="form-control varianClass" placeholder="" type="text" id="buyPrice" name="buyPrice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <h4 class="example-title">Sell Price</h4>
                             <div class="example">
                                 <div class="form-group">
@@ -611,6 +624,7 @@
     //VARIAN SUBMIT
     $('#btnVarian').click(function(){
        var price = $('#price').val();
+       var buyPrice = $('#buyPrice').val();
        var primary = $('#primary').val();
        var secondary = $('#secondary').val();
        var stock = $('#stock').val();
@@ -635,6 +649,7 @@
        var data = {
            'id':guid(),
            'price':price,
+           'buyPrice':buyPrice,
            'primary':primary,
            'secondary':secondary,
            'stock':stock,
@@ -648,6 +663,7 @@
            'image':image,
            'varians':varians
        };
+       console.log(data);
        varData.push(data);
        $('#arrayVarian').val(JSON.stringify(varData));
        $('input.varianClass').val('');

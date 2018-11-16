@@ -115,11 +115,11 @@ class ProductController extends Controller
         if($switch === "Y"){
             $array = $request['array_varian'];
             $data = json_decode($array,true);
-
             foreach($data as $x){
                 $stock = new Stock;
                 $stock->barcode = $x['barcode'];
                 $stock->price = $x['price'];
+                $stock->buy_price = $x['buyPrice'];
                 $stock->sku = $x['sku'];
                 $stock->stock = $x['stock'];
                 $stock->weight = $x['weight'];
@@ -155,6 +155,7 @@ class ProductController extends Controller
             $stock = new Stock;
             $stock->barcode = $input['barcode'];
             $stock->price = $input['price'];
+            $stock->buy_price = $x['buyPrice'];
             $stock->sku = $input['sku'];
             $stock->stock = $input['stock'];
             $stock->weight = $input['weight'];
