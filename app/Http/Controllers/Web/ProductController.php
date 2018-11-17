@@ -142,20 +142,26 @@ class ProductController extends Controller
                 $stocklog->description = "PRODUCT MASTER";
                 $stocklog->save();
 
-                $imageData = $x['image'];
-                @list($type, $imageData) = explode(';', $imageData);
-                @list(, $imageData) = explode(',', $imageData); 
-                $imageName = Uuid::Uuid4().'.'.'png';
-                File::put(public_path().'/images/product/' . $imageName, base64_decode($imageData));
                 $images = new Images;
-                $images->image = $imageName;
+                if($x['image']!=""){
+                    $imageData = $x['image'];
+                    @list($type, $imageData) = explode(';', $imageData);
+                    @list(, $imageData) = explode(',', $imageData); 
+                    $imageName = Uuid::Uuid4().'.'.'png';
+                    File::put(public_path().'/images/product/' . $imageName, base64_decode($imageData));
+                    $images->image = $imageName;
+                }else{
+                    $images->image = "no-image.png";
+                }
+
+
                 $stock->images()->save($images);
             }
         }else{
             $stock = new Stock;
             $stock->barcode = $input['barcode'];
             $stock->price = $input['price'];
-            $stock->buy_price = $x['buyPrice'];
+            $stock->buy_price = $input['buyPrice'];
             $stock->sku = $input['sku'];
             $stock->stock = $input['stock'];
             $stock->weight = $input['weight'];
@@ -173,14 +179,20 @@ class ProductController extends Controller
             $stocklog->description = "PRODUCT MASTER";
             $stocklog->save();
 
-            $imageData = $input['image_single'];
-            @list($type, $imageData) = explode(';', $imageData);
-            @list(, $imageData) = explode(',', $imageData); 
-            $imageName = Uuid::Uuid4().'.'.'png';
-            File::put(public_path().'/images/product/' . $imageName, base64_decode($imageData));
             $images = new Images;
-            $images->image = $imageName;
-            $stock->images()->save($images);
+            if(isset($input['image_single'])){
+                $imageData = $input['image_single'];
+                @list($type, $imageData) = explode(';', $imageData);
+                @list(, $imageData) = explode(',', $imageData); 
+                $imageName = Uuid::Uuid4().'.'.'png';
+                File::put(public_path().'/images/product/' . $imageName, base64_decode($imageData)); 
+                $images->image = $imageName;
+            }else{
+                $images->image = "no-image.png";
+            }
+
+                $stock->images()->save($images);
+
             //return $imageData;
         }
         return redirect()->route('product.index')

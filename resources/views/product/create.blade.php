@@ -163,7 +163,20 @@
                 </div>
                 <div class="panel-body container-fluid">
                     <div class="row row-lg">
-                        <div class="col-md-6 col-xl-4">
+                        <div class="col-md-6 col-xl-6">
+                            <h4 class="example-title">Buy Price</h4>
+                            <div class="example">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Rp. </span>
+                                        </div>
+                                        <input class="form-control" placeholder="" type="text" name="buyPrice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
                             <h4 class="example-title">Sell Price</h4>
                             <div class="example">
                                 <div class="form-group">
@@ -176,7 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-4">
+                        <div class="col-md-6 col-xl-6">
                             <h4 class="example-title">Primary Commision</h4>
                             <div class="example">
                                 <div class="form-group">
@@ -189,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-4">
+                        <div class="col-md-6 col-xl-6">
                             <h4 class="example-title">Secondary Commision</h4>
                             <div class="example">
                                 <div class="form-group">

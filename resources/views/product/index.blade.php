@@ -65,6 +65,7 @@
                         <th>Varian</th>
                         <th>Stock</th>
                         <th>Price</th>
+                        <th>Buy Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -77,6 +78,7 @@
                         <th>Varian</th>
                         <th>Stock</th>
                         <th>Price</th>
+                        <th>Buy Price</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
@@ -85,11 +87,19 @@
                 @foreach($data as $x)
                     <tr>
                         <td>
-                            @if(empty($x['stock']['images']))
-                            <img src="{{url('public/images/icon/no-image.png')}}" width='50px'>
-                            @else
-                            <img src="url('public/images/icon/no-image.png')" width='50px'>
-                            @endif
+                            @php($inc = 0)
+                            @foreach($x['stock'] as $st)
+                                @foreach($st['images'] as $im) 
+                                    @if ($inc == 0)
+                                        <img src="{{ asset('images/product/'.$im['image']) }}" style="width: 100px;">
+                                    @endif
+                                    
+                                    @if ($inc == 1)
+                                        @break
+                                    @endif
+                                    @php( $inc++ )
+                                @endforeach
+                            @endforeach
                         </td>
                         <td>{{$x['name']}}  <b><p>{{$x['categories']['name_ind']}}</p></b></td>
                         <td>
@@ -120,6 +130,13 @@
                             @php($id = '')
                             @foreach($x['stock'] as $d)
                                 {{number_format($d['price'],0,",",".")}}
+                                <br/>
+                            @endforeach
+                        </td>
+                        <td> 
+                            @php($id = '')
+                            @foreach($x['stock'] as $bp)
+                                {{number_format($bp['buy_price'],0,",",".")}}
                                 <br/>
                             @endforeach
                         </td>
