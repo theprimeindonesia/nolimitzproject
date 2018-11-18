@@ -62,7 +62,7 @@
                         <th>Tanggal</th>
                         <th>Supplier</th>
                         <th>Total</th>
-                        <th>Discon</th>
+                        <th>Discount</th>
                         <th>Grand Total</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -74,7 +74,7 @@
                         <th>Tanggal</th>
                         <th>Supplier</th>
                         <th>Total</th>
-                        <th>Discon</th>
+                        <th>Discount</th>
                         <th>Grand Total</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -86,9 +86,9 @@
                     <tr>
                         <td>{{$x->no_po}}</td>
                         <td>{{$x->created_at}}</td>
-                        <td>{{$x->suppliers->name}}</td>
+                        <td>{{$x->name}}</td>
                         <td>{{number_format($x->total,0,',','.')}}</td>
-                        <td>{{number_format($x->discon,0,',','.')}}</td>
+                        <td>{{number_format($x->discount,0,',','.')}}</td>
                         <td>{{number_format($x->grand_total,0,',','.')}}</td>
                         <td>
                         @if($x->status === 'PO')

@@ -159,11 +159,13 @@
                 </div>
                 
                 <div class="panel-body container-fluid" id="variansList">
-                   
+                        
+                        @if($stock->varians->count()==0)
                         <div class="text-center">
                             <h2>This Product Doesn't have varians</h2>
                             <a href="javascript:;" data-target="#exampleFormModal" data-toggle="modal" class="btn btn-primary"><i class="icon wb-plus"></i> Add Varian</a>
                         </div>
+                        @endif
                         @foreach($data['stock'] as $x)
                         <a href="{{route('product.varian.edit',$x->stock_id)}}" style="text-decoration:none">
                             <div class='card border border-primary'>

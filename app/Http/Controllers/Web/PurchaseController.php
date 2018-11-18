@@ -51,12 +51,12 @@ class PurchaseController extends Controller
             'no_po' => 'required',
             'suppliers_id' => 'required',
         ]);
-        $input = $request->all();
-        $purchase = new Po;
-        $purchase->no_po = $input['no_po'];
-        $purchase->total = $input['total'];
-        $purchase->grand_total = $input['total'];
-        $purchase->status = "PO";
+        $input                  = $request->all();
+        $purchase               = new Po;
+        $purchase->no_po        = $input['no_po'];
+        $purchase->total        = $input['total'];
+        $purchase->grand_total  = $input['total'];
+        $purchase->status       = "PO";
         $purchase->suppliers_id = $input['suppliers_id'];
         $purchase->save();
 
@@ -64,10 +64,10 @@ class PurchaseController extends Controller
         $data = json_decode($array,true);
 
         foreach($data as $x){
-            $podet = new PoDetails;
-            $podet->qty = $x['qty'];
-            $podet->price = $x['price'];
-            $podet->total = $x['qty'] * $x['price'];
+            $podet           = new PoDetails;
+            $podet->qty      = $x['qty'];
+            $podet->price    = $x['price'];
+            $podet->total    = $x['qty'] * $x['price'];
             $podet->stock_id = $x['stock'];
             $purchase->podetails()->save($podet);
         }

@@ -32,4 +32,38 @@ class Blogs extends Model
     {
         return $this->belongsTo('App\Models\CategoryBlogs','category_blogs_id');
     }
+
+    public static function generateUrl($title)
+    {
+        $tandaText = array(
+                    'spasi'=>" ",
+                    'koma'=>",",
+                    'tandatanya'=>"?",
+                    'tandaseru'=>"!",
+                    'titikkoma'=>";",
+                    'titikdua'=>":",
+                    'kutipsatu'=>"'",
+                    'dan'=>"&",
+                    'at'=>"@",
+                    'hashtag'=>"#",
+                    'persen'=>"%",
+                    'bintang'=>"*",
+                    'dollar'=>"$",
+                    "kurungbuka"=>"(",
+                    "kurungtutup"=>")",
+                    "kurungkurawalbuka"=>"{",
+                    "kurungkurawaltutup"=>"}",
+                    "atau"=>"/",
+                    "titik"=>".",
+                    "kurungsikubuka"=>"<",
+                    "kurungsikututup"=>">",
+                    "panahatas"=>"^",
+                    "plus"=>"+",
+                    "minus"=>"-",
+                    "kurung["=>"[",
+                    "kurung]"=>"]",
+                );
+
+        return str_replace($tandaText,"-", $title);
+    }
 }

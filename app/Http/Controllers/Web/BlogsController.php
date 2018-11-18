@@ -49,11 +49,12 @@ class BlogsController extends Controller
             $request->blogImages->move(public_path('/images/blogs/'), $imageName);
         }
 
+
         $data->title_en          = '';
         $data->title_ind         = $request->title_ind;
         $data->article_en        = '';
         $data->article_ind       = $request->article_ind;
-        $data->url               = '';
+        $data->url               = Blogs::generateUrl($request->title_ind);
         $data->status            = 'active';
         $data->category_blogs_id = $request->category_blogs_id;
 
@@ -116,7 +117,7 @@ class BlogsController extends Controller
         $data->title_ind         = $request->title_ind;
         $data->article_en        = '';
         $data->article_ind       = $request->article_ind;
-        $data->url               = '';
+        $data->url               = Blogs::generateUrl($request->title_ind);
         $data->status            = 'active';
         $data->category_blogs_id = $request->category_blogs_id;
 

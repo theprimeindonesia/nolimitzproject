@@ -60,8 +60,8 @@ class ProductController extends Controller
         $varianData = explode(",",$varian);
         
         foreach($varianData as $fd){
-            $varians = new ProductsVarians;
-            $varians->name = $fd;
+            $varians              = new ProductsVarians;
+            $varians->name        = $fd;
             $varians->products_id = $id;
             $varians->save();
         }
@@ -219,7 +219,8 @@ class ProductController extends Controller
     public function detail($id)
     {
         $data = Products::with('categories','stock','stock.varians.stock','productsfeature','productsmotor.motor','productstype.type','stock.images')->find($id);
-        return view('product.detail',compact('data'));
+        $stock = Stock::where('products_id', $id)->first();
+        return view('product.detail',compact('data', 'stock'));
     }
 
     public function edit($id)

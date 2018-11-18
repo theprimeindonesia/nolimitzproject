@@ -147,9 +147,7 @@ class OrdersController extends Controller
 
     public function cek()
     {
-       
         $members_id = "636c4401-eec5-4e9b-b774-b142d72a7aeb";
-
         $found = false;
         $array = array();
         while($found !== true){

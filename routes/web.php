@@ -150,7 +150,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
 
        //ORDERS
        Route::group(['prefix' => '/orders'],function(){
-           Route::get('/', 'Web\OrdersController@index')->name('orders.index');
+           Route::get('/index', 'Web\OrdersController@index')->name('orders.index');
            Route::get('/detail/{id}', 'Web\OrdersController@detail')->name('orders.detail');
            Route::post('/destroy/{id}', 'Web\OrdersController@destroy')->name('orders.destroy');
            Route::get('/paid/{id}', 'Web\OrdersController@paid')->name('orders.paid');
@@ -158,7 +158,7 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
            Route::group(['prefix' => '/return'],function(){
             Route::get('/', 'Web\OrdersController@return')->name('orders.return');
             });
-           Route::get('/cek', 'Web\OrdersController@cek')->name('orders.index');
+           // Route::get('/cek', 'Web\OrdersController@cek')->name('orders.index');
 
        });
 

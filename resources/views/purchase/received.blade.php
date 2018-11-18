@@ -255,22 +255,39 @@
         var totalx = "Rp. " + comma(total);
         $('#totalPo').html(totalx);
         var dis = $('#discon').val();
-        var grand = +total -  +dis
+        var grand = total -  dis
         $('#grandTotalPo').html("Rp. " + comma(grand));
         $('#total').val(total);
         $('#grandTotal').val(grand);
     }
 
-    $('#btnDiscon').click(function(){
-        var discon  = $('#discon').val();
-        var grandtotal = $('#grandTotal').val();
-        var xx = +grandtotal - +discon;
-        // alert(discon);
-        // alert(grandtotal);
-        // alert(xx);
-        $('#grandTotal').val(xx);
-        $('#grandTotalPo').html("Rp. " + comma(xx));
-    });
+    $btnDiscount = $('#btnDiscon');
+    $discount    = $('#discon');
+    $total       = $('#total');
+    $grandTotal  = $('#grandTotal');
+    $grandTotalPo= $('#grandTotalPo');
+
+    $btnDiscount.on('click', function(){
+        var discount  = $discount.val();
+        var total     = $total.val();
+
+        var gt = total - discount ;
+        $grandTotal.val(gt);
+        $grandTotalPo.html("Rp. "+ comma(gt));
+    }); 
+
+    // $('#btnDiscon').click(function(){
+    //     var discon  = $('#discon').val();
+    //     console.log('discon', discon);
+    //     var grandtotal = $('#grandTotal').val();
+    //     console.log('grandtotal', grandtotal);
+    //     var xx = grandtotal - discon;
+    //     // alert(discon);
+    //     // alert(grandtotal);
+    //     // alert(xx);
+    //     $('#grandTotal').val(xx);
+    //     $('#grandTotalPo').html("Rp. " + comma(xx));
+    // });
 
 </script>
 @endsection
