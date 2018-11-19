@@ -143,9 +143,11 @@ Route::group(['prefix' => 'admin','middleware' => 'assign.guard:admin,admin/logi
         Route::post('/bank/add/{id}', 'Web\MembersController@bankadd')->name('members.bank.add');
         Route::post('/bank/update/{id}', 'Web\MembersController@bankupdate')->name('members.bank.update');
         Route::post('/bank/destroy/{id}', 'Web\MembersController@bankdestroy')->name('members.bank.destroy');
+      });
 
-         
-
+      //Withdraws
+      Route::group(['prefix' => '/withdraws'], function(){
+        Route::get('/index', 'Web\WithdrawsController@index')->name('withdraws.index');
       });
 
        //ORDERS

@@ -127,6 +127,7 @@
           <li class="site-menu-item has-sub {{ Request::is([
             'admin/members', 'admin/members/*'
             , 'admin/orders', 'admin/orders/*'
+            , 'admin/withdraws', 'admin/withdraws/*'
             ]) ? 'active open':''}}">
             <a href="javascript:void(0)">
               <i class="site-menu-icon fa-users" aria-hidden="true"></i>
@@ -142,6 +143,11 @@
               <li class="site-menu-item {{ Request::is(['admin/orders', 'admin/orders/*']) ? 'active':''}}">
                 <a href="{{ route('orders.index') }}">
                   <span class="site-menu-title">Orders</span>
+                </a>
+              </li>
+              <li class="site-menu-item {{ Request::is(['admin/withdraws', 'admin/withdraws/*']) ? 'active':''}}">
+                <a href="{{ route('withdraws.index') }}">
+                  <span class="site-menu-title">Withdraws</span>
                 </a>
               </li>
             </ul>
